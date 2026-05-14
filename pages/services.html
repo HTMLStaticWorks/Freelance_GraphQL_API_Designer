@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GQLForge Services - GraphQL API Architecture, Schema Stitching, N+1 Solutions, Performance Audits & Team Training">
+  <title>Services — GQLForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header__inner">
+      <a href="../index.html" class="header__brand">
+        <div class="brand-logo">GQL</div>
+        <span class="brand-name">GQL<span>Forge</span></span>
+      </a>
+      <nav class="header__nav">
+        <a href="../index.html" class="nav__link">Home</a>
+        <a href="home2.html" class="nav__link">Home 2</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="services.html" class="nav__link active">Services</a>
+        <a href="blog.html" class="nav__link">Blog</a>
+        <a href="contact.html" class="nav__link">Contact</a>
+        <a href="dashboard.html" class="nav__link nav__dashboard"><i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+        <a href="login.html" class="btn btn--outline btn--sm">Login</a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+  <div class="mobile-menu">
+    <nav class="mobile-menu__nav">
+      <a href="../index.html" class="mobile-menu__link"><i class="fas fa-house"></i> Home</a>
+      <a href="home2.html" class="mobile-menu__link"><i class="fas fa-layer-group"></i> Home 2</a>
+      <a href="about.html" class="mobile-menu__link"><i class="fas fa-user"></i> About</a>
+      <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
+      <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="dashboard.html" class="mobile-menu__link" style="color:var(--clr-primary)"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    </nav>
+    <div class="mobile-menu__actions">
+      <a href="login.html" class="btn btn--outline">Login</a>
+      <a href="register.html" class="btn btn--primary">Get Started</a>
+    </div>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="page-hero__bg"></div>
+      <div class="container">
+        <div class="breadcrumb"><a href="../index.html">Home</a><span class="breadcrumb__sep">/</span><span class="breadcrumb__current">Services</span></div>
+        <div class="section__tag" style="display:inline-flex;"><i class="fas fa-briefcase"></i> Services</div>
+        <h1 style="margin:var(--space-4) 0; font-size:clamp(2rem,5vw,3.5rem);">GraphQL <span class="text-primary">Solutions</span><br>Built to Last</h1>
+        <p style="max-width:560px; margin:0 auto; color:var(--clr-text-muted);">Every service is tailored to your team's needs — whether you're starting fresh, scaling up, or rescuing a performance-challenged API.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 1: SERVICE CARDS -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-star"></i> What I Offer</div>
+          <h2 class="section__title">Core Services</h2>
+          <p class="section__subtitle">Specialized GraphQL expertise across the full API lifecycle — design, optimize, federate, train.</p>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:var(--space-6);">
+          <div class="service-card reveal" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-drafting-compass"></i></div>
+            <div class="service-card__num">01</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">API Architecture & Schema Design</h3>
+            <p style="margin-bottom:var(--space-5);">Complete schema design from scratch — types, queries, mutations, subscriptions, directives, and federation entities. Delivered with documentation and resolver stubs.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Full schema documentation</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Type-safe resolver stubs</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Federation-ready from day 1</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Security & auth directives</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">From $1,200</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Per project</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+
+          <div class="service-card reveal animate-delay-1" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <div class="service-card__num">02</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">Performance Audit & N+1 Solutions</h3>
+            <p style="margin-bottom:var(--space-5);">Comprehensive resolver profiling, query complexity analysis, and DataLoader implementation. Get a written report with all issues ranked by impact, plus the fixes applied.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Full resolver profiling</li>
+              <li style="display:flex; align-items:center; gap:var(--clr-success); flex-shrink:0;"></i> DataLoader implementation</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Before/after benchmarks</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Query complexity scoring</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">From $800</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Per audit</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+
+          <div class="service-card reveal animate-delay-2" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-network-wired"></i></div>
+            <div class="service-card__num">03</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">Federation Architecture</h3>
+            <p style="margin-bottom:var(--space-5);">Design and implement Apollo Federation supergraphs. Distributed schema ownership, subgraph boundaries, entity references, and a governance model your team can follow.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Supergraph design</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Entity & relationship mapping</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Schema registry setup</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Team governance model</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">From $2,400</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Per project</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+
+          <div class="service-card reveal" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-people-group"></i></div>
+            <div class="service-card__num">04</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">Team Training & Workshops</h3>
+            <p style="margin-bottom:var(--space-5);">Hands-on workshops for engineering teams covering GraphQL fundamentals, advanced patterns, DataLoader, caching, and federation governance models.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Live remote sessions</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Custom curriculum</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Recorded sessions</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Q&A follow-up</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">$400/hr</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Min 4 hours</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+
+          <div class="service-card reveal animate-delay-1" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-shield-halved"></i></div>
+            <div class="service-card__num">05</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">Security & Auth Hardening</h3>
+            <p style="margin-bottom:var(--space-5);">Add query depth limiting, complexity scoring, field-level permissions, rate throttling, and JWT/OAuth integration to your existing GraphQL API.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> JWT & OAuth integration</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Query complexity limits</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Field-level permissions</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Rate throttling</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">From $600</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Per engagement</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+
+          <div class="service-card reveal animate-delay-2" style="text-align:left; padding:var(--space-8);">
+            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-code-branch"></i></div>
+            <div class="service-card__num">06</div>
+            <h3 style="margin:var(--space-3) 0 var(--space-4);">Schema Migration & Evolution</h3>
+            <p style="margin-bottom:var(--space-5);">Migrate from REST to GraphQL or evolve an existing schema without breaking clients. Deprecation strategies, versioning patterns, and a step-by-step migration plan.</p>
+            <ul style="display:flex; flex-direction:column; gap:var(--space-3); margin-bottom:var(--space-6);">
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> REST → GraphQL migration</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Zero breaking changes</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Deprecation strategy</li>
+              <li style="display:flex; align-items:center; gap:var(--space-3); font-size:0.88rem; color:var(--clr-text-muted);"><i class="fas fa-check" style="color:var(--clr-success); flex-shrink:0;"></i> Client migration guide</li>
+            </ul>
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+              <div><div style="font-family:var(--font-display); font-size:1.4rem; font-weight:800; color:var(--clr-primary);">From $1,500</div><div style="font-size:0.75rem; color:var(--clr-text-muted);">Per project</div></div>
+              <a href="contact.html" class="btn btn--primary btn--sm"><i class="fas fa-arrow-right"></i> Get Quote</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PRICING -->
+    <section class="section" style="background:var(--clr-surface);">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-tag"></i> Pricing</div>
+          <h2 class="section__title">Simple, Transparent Pricing</h2>
+          <p class="section__subtitle">No hidden fees. Pick the engagement model that works for your team.</p>
+        </div>
+        <div class="grid-3">
+          <div class="pricing-card reveal">
+            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); text-transform:uppercase; letter-spacing:0.1em;">Starter</div>
+            <div class="pricing-amount"><sup>$</sup>800</div>
+            <div class="pricing-period">One-time / per audit</div>
+            <ul class="pricing-features">
+              <li class="pricing-feature"><i class="fas fa-check"></i> Schema review (up to 50 types)</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> N+1 detection report</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Performance recommendations</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> 1 week delivery</li>
+              <li class="pricing-feature no"><i class="fas fa-times"></i> Implementation included</li>
+              <li class="pricing-feature no"><i class="fas fa-times"></i> Team training session</li>
+            </ul>
+            <a href="contact.html" class="btn btn--outline" style="width:100%;">Get Started</a>
+          </div>
+          <div class="pricing-card pricing-card--featured reveal animate-delay-1">
+            <div class="pricing-badge">Most Popular</div>
+            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); text-transform:uppercase; letter-spacing:0.1em;">Professional</div>
+            <div class="pricing-amount"><sup>$</sup>2,400</div>
+            <div class="pricing-period">Per project</div>
+            <ul class="pricing-features">
+              <li class="pricing-feature"><i class="fas fa-check"></i> Full schema design</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> N+1 fixes implemented</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Federation setup</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Security hardening</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> 1 training session</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> 30-day support</li>
+            </ul>
+            <a href="contact.html" class="btn btn--primary" style="width:100%;">Get Started</a>
+          </div>
+          <div class="pricing-card reveal animate-delay-2">
+            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); text-transform:uppercase; letter-spacing:0.1em;">Enterprise</div>
+            <div class="pricing-amount"><sup>$</sup>6k+</div>
+            <div class="pricing-period">Custom engagement</div>
+            <ul class="pricing-features">
+              <li class="pricing-feature"><i class="fas fa-check"></i> Everything in Professional</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Supergraph architecture</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Multiple team training</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Schema governance model</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> 90-day retainer option</li>
+              <li class="pricing-feature"><i class="fas fa-check"></i> Priority Slack access</li>
+            </ul>
+            <a href="contact.html" class="btn btn--outline" style="width:100%;">Contact Me</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: FAQ & CTA -->
+    <section class="section">
+      <div class="container">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-16); align-items:start;">
+          <div class="reveal">
+            <div class="section__tag" style="display:inline-flex; margin-bottom:var(--space-5);"><i class="fas fa-circle-question"></i> FAQ</div>
+            <h2 style="margin-bottom:var(--space-8);">Common Questions</h2>
+            <div class="faq-item">
+              <div class="faq-question">How long does a typical project take? <i class="fas fa-chevron-down"></i></div>
+              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Audits take 1–2 weeks. Full schema designs take 2–4 weeks. Federation migrations are 4–8 weeks depending on complexity. I'll give you a precise estimate after our discovery call.</p></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Do you work with existing codebases? <i class="fas fa-chevron-down"></i></div>
+              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Absolutely. Most of my work is improving or extending existing GraphQL APIs. I'll need repo access and a brief architecture walkthrough to get started.</p></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">What tech stacks do you support? <i class="fas fa-chevron-down"></i></div>
+              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Apollo Server, Yoga, Pothos, Hasura, and custom GraphQL setups. Node.js / TypeScript primarily, but I can work with Python (Strawberry/Ariadne) and Go (gqlgen) schemas too.</p></div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-question">Is there a free consultation? <i class="fas fa-chevron-down"></i></div>
+              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Yes — the first 30-minute discovery call is always free. We'll discuss your goals, current pain points, and whether we're a good fit before any commitment.</p></div>
+            </div>
+          </div>
+          <div class="reveal animate-delay-1">
+            <div class="cta-section" style="padding:var(--space-10);">
+              <div class="section__tag" style="display:inline-flex;"><i class="fas fa-calendar-check"></i> Book Now</div>
+              <h2 style="font-size:1.6rem; margin:var(--space-4) 0;">Ready to Start?</h2>
+              <p style="color:var(--clr-text-muted); margin-bottom:var(--space-6); font-size:0.9rem;">Tell me about your project — schema challenges, team size, timeline. I'll respond within 24 hours with a plan.</p>
+              <a href="contact.html" class="btn btn--primary" style="width:100%; margin-bottom:var(--space-3);"><i class="fas fa-rocket"></i> Start a Project</a>
+              <a href="home2.html" class="btn btn--outline" style="width:100%;"><i class="fas fa-terminal"></i> Try Playground First</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="../index.html" class="header__brand" style="margin-bottom:var(--space-4);display:inline-flex;"><div class="brand-logo">GQL</div><span class="brand-name">GQL<span>Forge</span></span></a>
+          <p class="footer__brand-desc">Freelance GraphQL API designer. Schema stitching, N+1 solutions, federation architecture.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links">
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team Training</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Company</h3>
+          <ul class="footer__links">
+            <li><a href="about.html" class="footer__link"><i class="fas fa-chevron-right"></i> About</a></li>
+            <li><a href="blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog</a></li>
+            <li><a href="contact.html" class="footer__link"><i class="fas fa-chevron-right"></i> Contact</a></li>
+            <li><a href="dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Contact</h3>
+          <div class="footer__contact-item"><i class="fas fa-envelope"></i><span>hello@gqlforge.dev</span></div>
+          <div class="footer__contact-item"><i class="fas fa-location-dot"></i><span>Remote Worldwide</span></div>
+          <div class="footer__contact-item"><i class="fas fa-clock"></i><span>Mon–Fri, 9am–6pm IST</span></div>
+          <div class="footer__contact-item"><i class="fas fa-circle" style="color:var(--clr-success);font-size:0.6rem;margin-top:6px;"></i><span style="color:var(--clr-success);font-size:0.85rem;">Open to projects</span></div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 <span>GQLForge</span>. All rights reserved.</p>
+        <div class="footer__bottom-links"><a href="#" class="footer__bottom-link">Privacy</a><a href="#" class="footer__bottom-link">Terms</a></div>
+      </div>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
+</body>
+</html>

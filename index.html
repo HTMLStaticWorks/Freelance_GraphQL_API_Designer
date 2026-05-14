@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GQLForge - Freelance GraphQL API Designer specializing in schema stitching, N+1 solutions, and federation architecture.">
+  <meta name="keywords" content="GraphQL, API Design, Schema Stitching, Federation, N+1, Resolver Performance">
+  <meta property="og:title" content="GQLForge - Freelance GraphQL API Designer">
+  <meta property="og:description" content="API-first portfolio with schema stitching examples, N+1 solution case studies, and collaborative GraphQL playground.">
+  <title>GQLForge — Freelance GraphQL API Designer</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/dark-mode.css">
+  <link rel="stylesheet" href="assets/css/rtl.css">
+
+  <style>
+    /* Page-specific styles */
+    .hero { min-height: 100vh; }
+    .schema-preview {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-elevated);
+      animation: floatCard 6s ease-in-out infinite;
+    }
+    .schema-preview__bar {
+      background: rgba(0,0,0,0.4);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--clr-border);
+    }
+    .stack-icons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .stack-icon {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: var(--clr-primary-dim);
+      border: 1px solid var(--clr-border);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--clr-primary);
+    }
+
+    /* Process connector line */
+    .process-step:not(:last-child) .process-step__num::before {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--clr-primary), transparent);
+    }
+
+    /* Floating label for case studies section */
+    .n1-demo {
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .n1-before { color: var(--clr-error); }
+    .n1-after { color: var(--clr-success); }
+    .n1-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--clr-text-faint);
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <!-- Brand -->
+      <a href="index.html" class="header__brand" aria-label="GQLForge Home">
+        <div class="brand-logo" aria-hidden="true">GQL</div>
+        <span class="brand-name">GQL<span>Forge</span></span>
+      </a>
+
+      <!-- Desktop Navigation (center) -->
+      <nav class="header__nav" aria-label="Main navigation">
+        <a href="index.html" class="nav__link">Home</a>
+        <a href="pages/home2.html" class="nav__link">Home 2</a>
+        <a href="pages/about.html" class="nav__link">About</a>
+        <a href="pages/services.html" class="nav__link">Services</a>
+        <a href="pages/blog.html" class="nav__link">Blog</a>
+        <a href="pages/contact.html" class="nav__link">Contact</a>
+        <a href="pages/dashboard.html" class="nav__link nav__dashboard">
+          <i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard
+        </a>
+      </nav>
+
+      <!-- Actions (right) -->
+      <div class="header__actions">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">
+          <i class="fas fa-language"></i>
+        </button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme">
+          <i class="fas fa-sun"></i>
+        </button>
+        <a href="pages/login.html" class="btn btn--outline btn--sm">Login</a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+    <nav class="mobile-menu__nav">
+      <a href="index.html" class="mobile-menu__link"><i class="fas fa-house"></i> Home</a>
+      <a href="pages/home2.html" class="mobile-menu__link"><i class="fas fa-layer-group"></i> Home 2</a>
+      <a href="pages/about.html" class="mobile-menu__link"><i class="fas fa-user"></i> About</a>
+      <a href="pages/services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
+      <a href="pages/blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="pages/contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="pages/dashboard.html" class="mobile-menu__link" style="color: var(--clr-primary);"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    </nav>
+    <div class="mobile-menu__actions">
+      <a href="pages/login.html" class="btn btn--outline">Login</a>
+      <a href="pages/register.html" class="btn btn--primary">Get Started</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================
+         SECTION 1: HERO
+         ========================================== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__glow-2" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__tag">
+            <span class="hero__tag-dot" aria-hidden="true"></span>
+            <span class="mono">Available for Projects</span>
+          </div>
+
+          <h1 class="hero__title" id="hero-heading">
+            Crafting <span class="accent">GraphQL APIs</span><br>
+            That Scale Beautifully
+          </h1>
+
+          <p class="hero__desc">
+            Freelance GraphQL architect specializing in schema stitching, N+1 elimination,
+            and federation design. I build the APIs that power product teams.
+          </p>
+
+          <p class="hero__desc" style="margin-top: -12px; font-size: 0.95rem;">
+            <span class="mono text-primary" data-typing>Schema Stitching Expert</span><span style="color: var(--clr-primary); font-family: var(--font-mono);">|</span>
+          </p>
+
+          <div class="hero__actions">
+            <a href="pages/services.html" class="btn btn--primary btn--lg">
+              <i class="fas fa-rocket"></i> View Services
+            </a>
+            <a href="pages/home2.html" class="btn btn--outline btn--lg">
+              <i class="fas fa-play-circle"></i> Live Playground
+            </a>
+          </div>
+
+          <div class="hero__stats">
+            <div>
+              <div class="hero__stat-value" data-counter data-target="80" data-suffix="+">0+</div>
+              <div class="hero__stat-label">APIs Shipped</div>
+            </div>
+            <div>
+              <div class="hero__stat-value" data-counter data-target="97" data-suffix="%">0%</div>
+              <div class="hero__stat-label">Client Satisfaction</div>
+            </div>
+            <div>
+              <div class="hero__stat-value" data-counter data-target="4.8" data-suffix="x">0x</div>
+              <div class="hero__stat-label">Avg Perf Gain</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual (desktop) -->
+        <div class="hero__visual" aria-hidden="true">
+          <div class="schema-preview">
+            <div class="schema-preview__bar">
+              <div class="schema-dots">
+                <div class="schema-dot"></div>
+                <div class="schema-dot"></div>
+                <div class="schema-dot"></div>
+              </div>
+              <span class="schema-filename">schema.graphql</span>
+            </div>
+            <div class="code-block" style="border:none; border-radius:0; margin:0; font-size:0.77rem; background: rgba(0,0,0,0.5);">
+<span class="cm"># Federation-ready schema</span>
+<span class="kw">type</span> <span class="type">Product</span> <span class="fn">@key</span>(fields: <span class="str">"id"</span>) {
+  id: <span class="type">ID!</span>
+  name: <span class="type">String!</span>
+  price: <span class="type">Float!</span>
+  <span class="cm"># Resolved via DataLoader</span>
+  reviews: [<span class="type">Review!</span>]! <span class="fn">@defer</span>
+  inventory: <span class="type">Inventory</span>
+}
+
+<span class="kw">type</span> <span class="type">Query</span> {
+  products(
+    first: <span class="type">Int</span>
+    filter: <span class="type">ProductFilter</span>
+  ): <span class="type">ProductConnection!</span>
+}
+            </div>
+            <div style="padding: 16px; border-top: 1px solid var(--clr-border); display: flex; align-items: center; justify-content: space-between;">
+              <div class="stack-icons">
+                <span class="stack-icon"><i class="fas fa-check-circle"></i> N+1 Solved</span>
+                <span class="stack-icon"><i class="fas fa-bolt"></i> DataLoader</span>
+              </div>
+              <span class="badge badge--success"><i class="fas fa-circle" style="font-size:6px;"></i> Live</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-indicator" aria-hidden="true">
+        <i class="fas fa-chevron-down"></i>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 2: FEATURES / EXPERTISE
+         ========================================== -->
+    <section class="section" id="features" aria-labelledby="features-heading">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-star"></i> Core Expertise</div>
+          <h2 class="section__title" id="features-heading">Why Teams Choose GQLForge</h2>
+          <p class="section__subtitle">From schema design to production deployment, I cover every aspect of your GraphQL journey.</p>
+        </div>
+
+        <div class="features__grid">
+          <div class="card reveal">
+            <div class="card__icon"><i class="fas fa-sitemap"></i></div>
+            <h3 class="card__title">Schema Stitching</h3>
+            <p>Combine multiple GraphQL schemas into a unified API layer. Seamless data merging across microservices with type safety preserved throughout.</p>
+          </div>
+
+          <div class="card reveal animate-delay-1">
+            <div class="card__icon"><i class="fas fa-bolt"></i></div>
+            <h3 class="card__title">N+1 Elimination</h3>
+            <p>DataLoader patterns, batching strategies, and caching layers that turn hundreds of database calls into just a few. Measured, proven results.</p>
+          </div>
+
+          <div class="card reveal animate-delay-2">
+            <div class="card__icon"><i class="fas fa-network-wired"></i></div>
+            <h3 class="card__title">Federation Architecture</h3>
+            <p>Design Apollo Federation supergraphs that distribute ownership across teams while maintaining a single, coherent API surface.</p>
+          </div>
+
+          <div class="card reveal animate-delay-3">
+            <div class="card__icon"><i class="fas fa-tachometer-alt"></i></div>
+            <h3 class="card__title">Resolver Performance</h3>
+            <p>Profile, analyze, and optimize resolvers. Implement field-level caching and smart batching for sub-100ms query response times.</p>
+          </div>
+
+          <div class="card reveal animate-delay-1">
+            <div class="card__icon"><i class="fas fa-shield-halved"></i></div>
+            <h3 class="card__title">Security & Auth</h3>
+            <p>JWT, OAuth, field-level permissions with directives. Query depth limiting, complexity scoring, and rate throttling out of the box.</p>
+          </div>
+
+          <div class="card reveal animate-delay-2">
+            <div class="card__icon"><i class="fas fa-code-branch"></i></div>
+            <h3 class="card__title">Schema Evolution</h3>
+            <p>Deprecation strategies, versioning patterns, and backwards-compatible schema migrations that keep your API alive without breaking clients.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: CASE STUDIES (N+1 Solutions)
+         ========================================== -->
+    <section class="section" style="background: var(--clr-surface);" id="case-studies" aria-labelledby="case-heading">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-microscope"></i> Case Studies</div>
+          <h2 class="section__title" id="case-heading">N+1 Solutions & Real Results</h2>
+          <p class="section__subtitle">Real problems, real fixes. Every case study includes before/after metrics and the exact technique used.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: var(--space-6);">
+          <div class="case-study-card reveal">
+            <div>
+              <div class="case-study-card__tag">E-Commerce Platform</div>
+              <h3 style="margin-bottom: var(--space-4);">Product Catalog with 500+ Queries/sec</h3>
+              <p style="margin-bottom: var(--space-5);">The product listing page was triggering 1 query per product to fetch reviews. With 50 products per page, that's 51 DB calls per user request.</p>
+              <div class="n1-demo">
+                <div class="n1-label">Before (N+1)</div>
+                <div class="n1-before">SELECT * FROM reviews WHERE product_id = 1;
+SELECT * FROM reviews WHERE product_id = 2;
+<span style="color: var(--clr-text-faint)">... × 48 more queries</span></div>
+                <div style="height: 12px;"></div>
+                <div class="n1-label">After (DataLoader)</div>
+                <div class="n1-after">SELECT * FROM reviews WHERE product_id IN (1,2,...50);</div>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="case-metric">
+                <div class="case-metric__value">51→1</div>
+                <div class="case-metric__label">DB Calls Reduced</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value" style="color: var(--clr-success);">94%</div>
+                <div class="case-metric__label">Latency Drop</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value">DataLoader</div>
+                <div class="case-metric__label">Technique Used</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value">3 days</div>
+                <div class="case-metric__label">Implementation</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-study-card reveal">
+            <div>
+              <div class="case-study-card__tag">SaaS Dashboard</div>
+              <h3 style="margin-bottom: var(--space-4);">Multi-Tenant Analytics with Schema Stitching</h3>
+              <p style="margin-bottom: var(--space-5);">Merged 4 separate GraphQL services (users, billing, analytics, notifications) into one unified supergraph. Teams kept ownership, clients got simplicity.</p>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <span class="tech-pill"><i class="fas fa-diagram-project"></i> Apollo Federation</span>
+                <span class="tech-pill"><i class="fas fa-code-merge"></i> Schema Stitching</span>
+                <span class="tech-pill"><i class="fas fa-cubes"></i> Microservices</span>
+              </div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4);">
+              <div class="case-metric">
+                <div class="case-metric__value">4→1</div>
+                <div class="case-metric__label">APIs Unified</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value" style="color: var(--clr-success);">5x</div>
+                <div class="case-metric__label">Dev Velocity</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value">0</div>
+                <div class="case-metric__label">Breaking Changes</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric__value">2 wks</div>
+                <div class="case-metric__label">Timeline</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: SERVICES OVERVIEW
+         ========================================== -->
+    <section class="section" id="services" aria-labelledby="services-heading">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-briefcase"></i> Services</div>
+          <h2 class="section__title" id="services-heading">What I Build For You</h2>
+          <p class="section__subtitle">From greenfield APIs to performance rescue missions — specialized GraphQL solutions for every stage.</p>
+        </div>
+
+        <div class="services__grid">
+          <div class="service-card reveal">
+            <div class="service-card__num">01</div>
+            <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-drafting-compass"></i></div>
+            <h3 class="card__title">API Architecture Design</h3>
+            <p>Complete schema design from scratch. Type definitions, resolvers, mutations, subscriptions — all documented and production-ready.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+
+          <div class="service-card reveal animate-delay-1">
+            <div class="service-card__num">02</div>
+            <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <h3 class="card__title">Performance Audit</h3>
+            <p>Deep-dive resolver profiling, query complexity analysis, and a full optimization report with prioritized improvements.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+
+          <div class="service-card reveal animate-delay-2">
+            <div class="service-card__num">03</div>
+            <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-people-group"></i></div>
+            <h3 class="card__title">Team Training</h3>
+            <p>Workshops for engineering teams covering GraphQL best practices, DataLoader patterns, and federation governance models.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 5: TESTIMONIALS
+         ========================================== -->
+    <section class="section" style="background: var(--clr-surface);" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-comments"></i> Testimonials</div>
+          <h2 class="section__title" id="testimonials-heading">What Teams Are Saying</h2>
+          <p class="section__subtitle">From startups to enterprise product teams — here's what working with GQLForge delivers.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="testimonial-card reveal">
+            <div class="testimonial-card__quote">"</div>
+            <p class="testimonial-card__text">"GQLForge cut our API response times by 87%. The DataLoader implementation was surgical — zero regressions, pure performance gain."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">SK</div>
+              <div>
+                <div class="testimonial-card__name">Siddharth Kumar</div>
+                <div class="testimonial-card__role">CTO, Hyperlog</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card reveal animate-delay-1">
+            <div class="testimonial-card__quote">"</div>
+            <p class="testimonial-card__text">"The schema stitching work unified 5 of our services in 2 weeks. Our frontend teams couldn't believe how clean the API became."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">AM</div>
+              <div>
+                <div class="testimonial-card__name">Arjun Mehta</div>
+                <div class="testimonial-card__role">VP Engineering, Stacklane</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card reveal animate-delay-2">
+            <div class="testimonial-card__quote">"</div>
+            <p class="testimonial-card__text">"The dashboard makes schema reviews so much easier for our product team. Non-engineers can now participate in API design discussions."</p>
+            <div class="testimonial-card__author">
+              <div class="testimonial-card__avatar">PL</div>
+              <div>
+                <div class="testimonial-card__name">Priya Lakshmi</div>
+                <div class="testimonial-card__role">Product Lead, Nexora</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 6: CTA
+         ========================================== -->
+    <section class="section" aria-labelledby="cta-heading">
+      <div class="container">
+        <div class="cta-section reveal">
+          <div class="section__tag" style="display: inline-flex;"><i class="fas fa-rocket"></i> Start a Project</div>
+          <h2 class="section__title" id="cta-heading" style="margin-top: var(--space-4);">Ready to Build Your<br>Perfect GraphQL API?</h2>
+          <p style="max-width: 500px; margin: var(--space-4) auto var(--space-8); color: var(--clr-text-muted);">
+            Let's discuss your schema challenges, performance goals, and timeline. First consultation is always free.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center;">
+            <a href="pages/contact.html" class="btn btn--primary btn--lg">
+              <i class="fas fa-calendar-check"></i> Book a Consultation
+            </a>
+            <a href="pages/home2.html" class="btn btn--outline btn--lg">
+              <i class="fas fa-terminal"></i> Try the Playground
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__grid">
+        <!-- Brand Col -->
+        <div>
+          <a href="index.html" class="header__brand" style="margin-bottom: var(--space-4); display: inline-flex;">
+            <div class="brand-logo">GQL</div>
+            <span class="brand-name">GQL<span>Forge</span></span>
+          </a>
+          <p class="footer__brand-desc">
+            Freelance GraphQL API designer crafting schemas that scale. Schema stitching, N+1 solutions, and federation architecture.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+          </div>
+        </div>
+
+        <!-- Services Col -->
+        <div>
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links">
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1 Solutions</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team Training</a></li>
+          </ul>
+        </div>
+
+        <!-- Resources Col -->
+        <div>
+          <h3 class="footer__col-title">Resources</h3>
+          <ul class="footer__links">
+            <li><a href="pages/home2.html" class="footer__link"><i class="fas fa-chevron-right"></i> GraphQL Playground</a></li>
+            <li><a href="pages/blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog & Articles</a></li>
+            <li><a href="pages/about.html" class="footer__link"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
+            <li><a href="pages/dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+            <li><a href="documentation/README.html" class="footer__link"><i class="fas fa-chevron-right"></i> Documentation</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Col -->
+        <div>
+          <h3 class="footer__col-title">Contact</h3>
+          <div class="footer__contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>hello@gqlforge.dev</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-location-dot"></i>
+            <span>Available Worldwide (Remote)</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-clock"></i>
+            <span>Mon–Fri, 9am–6pm IST</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-circle" style="color: var(--clr-success); font-size: 0.6rem; margin-top: 6px;"></i>
+            <span style="color: var(--clr-success); font-size: 0.85rem;">Open to new projects</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 <span>GQLForge</span>. Crafted with <i class="fas fa-heart" style="color: var(--clr-error);"></i> and GraphQL.</p>
+        <div class="footer__bottom-links">
+          <a href="#" class="footer__bottom-link">Privacy Policy</a>
+          <a href="#" class="footer__bottom-link">Terms of Service</a>
+          <a href="#" class="footer__bottom-link">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

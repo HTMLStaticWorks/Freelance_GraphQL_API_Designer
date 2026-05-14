@@ -1,0 +1,18 @@
+/* dark-mode.css - Additional dark mode specific overrides */
+/* Dark mode is the default theme, this file handles special cases */
+
+[data-theme="dark"] .code-block {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .form-select {
+  background-color: var(--clr-glass);
+}
+
+[data-theme="dark"] .hero__visual .schema-card {
+  background: rgba(17, 24, 39, 0.95);
+}
+
+/* Scrollbar dark */
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #0A0F1E; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(0,212,255,0.2); }

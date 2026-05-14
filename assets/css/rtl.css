@@ -1,0 +1,86 @@
+/* rtl.css - Right-to-Left Layout Support */
+
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] .header__nav {
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+}
+
+[dir="rtl"] .header__actions {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+[dir="rtl"] .footer__link:hover {
+  transform: translateX(-4px);
+}
+
+[dir="rtl"] .footer__grid {
+  direction: rtl;
+}
+
+[dir="rtl"] .mobile-menu__link:hover {
+  padding-right: 20px;
+}
+
+[dir="rtl"] .hero__visual {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .process-step {
+  grid-template-columns: 60px 1fr;
+}
+
+[dir="rtl"] .nav__link::after {
+  right: 50%;
+  left: auto;
+  transform: translateX(50%);
+}
+
+[dir="rtl"] .dashboard__sidebar {
+  left: auto;
+  right: 0;
+  border-right: none;
+  border-left: 1px solid var(--clr-border);
+}
+
+[dir="rtl"] .dashboard__content {
+  margin-left: 0;
+  margin-right: var(--sidebar-w);
+}
+
+[dir="rtl"] .sidebar__link {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .sidebar__link-text { margin-left: 0; margin-right: 0; }
+
+[dir="rtl"] .card__icon { margin-right: 0; margin-left: auto; }
+
+[dir="rtl"] .btn i:last-child { margin-left: 0; margin-right: var(--space-2); }
+
+[dir="rtl"] .form-error { flex-direction: row-reverse; }
+
+[dir="rtl"] .hero__title .accent::after {
+  right: 0;
+  left: auto;
+  background: linear-gradient(270deg, var(--clr-primary), transparent);
+}
+
+/* Mobile RTL */
+@media (max-width: 1023px) {
+  [dir="rtl"] .dashboard__sidebar {
+    right: -var(--sidebar-w);
+    left: auto;
+  }
+  [dir="rtl"] .dashboard__sidebar.open {
+    right: 0;
+    left: auto;
+  }
+}

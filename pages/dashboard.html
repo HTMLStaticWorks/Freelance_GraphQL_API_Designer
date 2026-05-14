@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — GQLForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body class="dashboard-page">
+
+  <!-- FIXED DASHBOARD HEADER -->
+  <header class="dash-header">
+    <!-- Brand -->
+    <a href="../index.html" class="dash-header__brand">
+      <div class="brand-logo">GQL</div>
+      <span class="brand-name" style="display:none;">GQL<span>Forge</span></span>
+    </a>
+    <span class="dash-header__title">Schema Dashboard</span>
+
+    <!-- Hamburger (mobile/tablet only) -->
+    <button class="header__action-btn dash-hamburger" aria-label="Toggle sidebar" aria-expanded="false" style="display:flex;">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="dash-header__actions">
+      <!-- Notifications -->
+      <div style="position:relative;">
+        <button class="notif-btn" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <div class="notif-badge"></div>
+        </button>
+        <div data-notif-dropdown style="display:none; position:absolute; top:calc(100% + 8px); right:0; width:300px; background:var(--clr-surface); border:1px solid var(--clr-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-elevated); z-index:200; overflow:hidden;"></div>
+      </div>
+
+      <!-- RTL + Theme -->
+      <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+      <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+
+      <!-- Profile -->
+      <div class="profile-btn" tabindex="0" aria-label="Profile menu">
+        <div class="profile-avatar">KS</div>
+        <div class="profile-info">
+          <div class="profile-name">Kiran Selvaraj</div>
+          <div class="profile-role">Pro Plan</div>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size:0.7rem; color:var(--clr-text-muted);"></i>
+      </div>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="dash-sidebar" role="navigation" aria-label="Dashboard navigation">
+    <div class="sidebar__section">
+      <div class="sidebar__section-title">Main</div>
+      <nav class="sidebar__nav">
+        <a href="dashboard.html" class="sidebar__link active"><i class="fas fa-gauge-high"></i> Overview</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-diagram-project"></i> Schema Drafts <span class="sidebar__badge">4</span></a>
+        <a href="#" class="sidebar__link"><i class="fas fa-terminal"></i> Playground</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-tachometer-alt"></i> Resolver Perf</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-chart-line"></i> Query Analytics</a>
+      </nav>
+    </div>
+
+    <div class="sidebar__divider"></div>
+
+    <div class="sidebar__section">
+      <div class="sidebar__section-title">Management</div>
+      <nav class="sidebar__nav">
+        <a href="#" class="sidebar__link"><i class="fas fa-users"></i> Team <span class="sidebar__badge">3</span></a>
+        <a href="#" class="sidebar__link"><i class="fas fa-download"></i> Manifests</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-shield-halved"></i> Security Rules</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-bell"></i> Notifications <span class="sidebar__badge">3</span></a>
+      </nav>
+    </div>
+
+    <div class="sidebar__divider"></div>
+
+    <div class="sidebar__section">
+      <div class="sidebar__section-title">Account</div>
+      <nav class="sidebar__nav">
+        <a href="#" class="sidebar__link"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-gear"></i> Settings</a>
+        <a href="#" class="sidebar__link"><i class="fas fa-credit-card"></i> Billing</a>
+      </nav>
+    </div>
+
+    <div class="sidebar__footer">
+      <div class="sidebar__user">
+        <div class="profile-avatar" style="width:34px;height:34px;font-size:0.75rem;">KS</div>
+        <div class="sidebar__user-info">
+          <div class="sidebar__user-name">Kiran Selvaraj</div>
+          <div class="sidebar__user-plan">Pro Plan</div>
+        </div>
+        <a href="login.html" title="Logout" style="color:var(--clr-text-faint); font-size:0.85rem; transition:color var(--transition);" onmouseover="this.style.color='var(--clr-error)'" onmouseout="this.style.color='var(--clr-text-faint)'"><i class="fas fa-right-from-bracket"></i></a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Sidebar overlay (mobile) -->
+  <div class="sidebar-overlay"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-main">
+    <div class="dash-content">
+
+      <!-- Page Header -->
+      <div class="dash-page-header">
+        <div>
+          <h1 class="dash-page-title">Overview</h1>
+          <p class="dash-page-subtitle">Schema performance, query metrics, and team activity at a glance.</p>
+        </div>
+        <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
+          <button class="btn btn--outline btn--sm"><i class="fas fa-calendar"></i> Last 30 Days</button>
+          <button class="btn btn--primary btn--sm" data-download="schema"><i class="fas fa-download"></i> Export Report</button>
+        </div>
+      </div>
+
+      <!-- STAT CARDS -->
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card__top">
+            <div class="stat-card__icon"><i class="fas fa-bolt"></i></div>
+            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 12%</div>
+          </div>
+          <div class="stat-card__value" data-live="queries">1,284</div>
+          <div class="stat-card__label">Queries Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__top">
+            <div class="stat-card__icon"><i class="fas fa-stopwatch"></i></div>
+            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 8%</div>
+          </div>
+          <div class="stat-card__value">42ms</div>
+          <div class="stat-card__label">Avg Response Time</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__top">
+            <div class="stat-card__icon"><i class="fas fa-diagram-project"></i></div>
+            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 2</div>
+          </div>
+          <div class="stat-card__value">4</div>
+          <div class="stat-card__label">Schema Drafts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__top">
+            <div class="stat-card__icon"><i class="fas fa-database"></i></div>
+            <div class="stat-card__change down"><i class="fas fa-arrow-down"></i> 94%</div>
+          </div>
+          <div class="stat-card__value" style="color:var(--clr-success);">1</div>
+          <div class="stat-card__label">Avg DB Calls/Query</div>
+        </div>
+      </div>
+
+      <!-- MAIN GRID: CHART + DONUT -->
+      <div class="dash-grid">
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div>
+              <div class="dash-panel__title">Query Complexity Over Time</div>
+              <div class="dash-panel__subtitle">Daily average complexity score (lower is better)</div>
+            </div>
+            <select class="form-select form-input" style="width:auto; padding:6px 12px; font-size:0.8rem;">
+              <option>Last 14 Days</option>
+              <option>Last 30 Days</option>
+              <option>Last 90 Days</option>
+            </select>
+          </div>
+          <div class="chart-area" data-chart="complexity" style="align-items:flex-end;"></div>
+          <div style="display:flex; gap:var(--space-6); margin-top:var(--space-4); flex-wrap:wrap;">
+            <div style="display:flex; align-items:center; gap:var(--space-2); font-size:0.8rem; color:var(--clr-text-muted);">
+              <div style="width:10px; height:10px; border-radius:2px; background:var(--clr-primary);"></div> Complexity Score
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div>
+              <div class="dash-panel__title">Resolver Health</div>
+              <div class="dash-panel__subtitle">N+1 detection status</div>
+            </div>
+          </div>
+          <div class="donut-chart">
+            <div class="donut-center">
+              <div class="donut-value">94%</div>
+              <div class="donut-label">Optimized</div>
+            </div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:var(--space-3);">
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
+              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:var(--clr-primary);"></div> Optimized</div>
+              <span class="mono">45%</span>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
+              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:#0066FF;"></div> Batched</div>
+              <span class="mono">27%</span>
+            </div>
+            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
+              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:rgba(0,212,255,0.3);"></div> Needs Work</div>
+              <span class="mono" style="color:var(--clr-warning);">28%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCHEMA DRAFTS TABLE + ACTIVITY -->
+      <div class="dash-grid">
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div>
+              <div class="dash-panel__title">Schema Drafts</div>
+              <div class="dash-panel__subtitle">Current review queue</div>
+            </div>
+            <button class="btn btn--primary btn--sm"><i class="fas fa-plus"></i> New Draft</button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Schema Name</th>
+                  <th>Status</th>
+                  <th>Complexity</th>
+                  <th>Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="data-table__name">e-commerce-v3.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">42 types · Federation v2</div></td>
+                  <td><span class="badge badge--success">Published</span></td>
+                  <td><div>Score: 28<div class="complexity-meter"><div class="complexity-fill low" style="width:28%;"></div></div></div></td>
+                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">2h ago</td>
+                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm" title="Edit"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema" title="Download"><i class="fas fa-download"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="data-table__name">saas-dashboard.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">28 types · Stitched</div></td>
+                  <td><span class="badge badge--warning">In Review</span></td>
+                  <td><div>Score: 61<div class="complexity-meter"><div class="complexity-fill med" style="width:61%;"></div></div></div></td>
+                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">1d ago</td>
+                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="data-table__name">social-platform.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">35 types · Real-time</div></td>
+                  <td><span class="badge badge--primary">Draft</span></td>
+                  <td><div>Score: 45<div class="complexity-meter"><div class="complexity-fill med" style="width:45%;"></div></div></div></td>
+                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">3d ago</td>
+                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
+                </tr>
+                <tr>
+                  <td><div class="data-table__name">healthcare-api.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">18 types · HIPAA mode</div></td>
+                  <td><span class="badge badge--error">Needs Fix</span></td>
+                  <td><div>Score: 88<div class="complexity-meter"><div class="complexity-fill high" style="width:88%;"></div></div></div></td>
+                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">5d ago</td>
+                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div class="dash-panel__title">Activity Feed</div>
+          </div>
+          <div>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Schema published</strong> — e-commerce-v3 is now live</div><div class="activity-time">2h ago</div></div>
+            <div class="activity-item"><div class="activity-dot warn"></div><div class="activity-text"><strong>High complexity</strong> detected in healthcare-api resolver</div><div class="activity-time">5h ago</div></div>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Team member</strong> Priya added a comment to saas-dashboard draft</div><div class="activity-time">1d ago</div></div>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Manifest downloaded</strong> — e-commerce federation manifest (v3)</div><div class="activity-time">1d ago</div></div>
+            <div class="activity-item"><div class="activity-dot error"></div><div class="activity-text"><strong>N+1 detected</strong> in User.orders resolver — 28 DB calls</div><div class="activity-time">2d ago</div></div>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>DataLoader applied</strong> — reduced Product.reviews from 51→1 calls</div><div class="activity-time">3d ago</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RESOLVER PERFORMANCE + PLAYGROUND -->
+      <div class="dash-grid">
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div>
+              <div class="dash-panel__title">Resolver Performance</div>
+              <div class="dash-panel__subtitle">Average response time (ms)</div>
+            </div>
+            <a href="#" class="btn btn--ghost btn--sm">View All <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div>
+            <div class="resolver-item"><div class="resolver-name">Query.products</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:42%;"></div></div><div class="resolver-val">42ms</div></div>
+            <div class="resolver-item"><div class="resolver-name">Product.reviews</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:15%;"></div></div><div class="resolver-val">52ms</div></div>
+            <div class="resolver-item"><div class="resolver-name">User.orders</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:20%;"></div></div><div class="resolver-val">38ms</div></div>
+            <div class="resolver-item"><div class="resolver-name">Order.items</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:12%;"></div></div><div class="resolver-val">28ms</div></div>
+            <div class="resolver-item" style="border-bottom:none;"><div class="resolver-name">Mutation.createOrder</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:65%;"></div></div><div class="resolver-val" style="color:var(--clr-warning);">130ms</div></div>
+          </div>
+        </div>
+
+        <div class="dash-panel">
+          <div class="dash-panel__header">
+            <div class="dash-panel__title">Quick Playground</div>
+          </div>
+          <textarea data-playground="query" class="query-input" style="min-height:180px;" spellcheck="false">query {
+  products(first: 3) {
+    edges {
+      node {
+        id
+        name
+        price
+      }
+    }
+  }
+}</textarea>
+          <div style="display:flex; gap:var(--space-3); margin:var(--space-4) 0;">
+            <button class="btn btn--primary btn--sm" data-playground="run"><i class="fas fa-play"></i> Run Query</button>
+            <button class="btn btn--outline btn--sm" data-playground="format"><i class="fas fa-wand-magic-sparkles"></i> Format</button>
+          </div>
+          <div data-playground="result" class="query-result" style="min-height:120px; font-size:0.78rem;">// Run a query to see results...</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/dashboard.js"></script>
+  <script>
+    // Connect dash hamburger
+    document.querySelector('.dash-hamburger').addEventListener('click', () => {
+      const sidebar = document.querySelector('.dash-sidebar');
+      const overlay = document.querySelector('.sidebar-overlay');
+      const isOpen = sidebar.classList.toggle('open');
+      overlay.classList.toggle('show', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    document.querySelector('.sidebar-overlay').addEventListener('click', () => {
+      document.querySelector('.dash-sidebar').classList.remove('open');
+      document.querySelector('.sidebar-overlay').classList.remove('show');
+      document.body.style.overflow = '';
+    });
+  </script>
+</body>
+</html>

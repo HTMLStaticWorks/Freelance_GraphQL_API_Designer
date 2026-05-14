@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — GQLForge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    body { min-height:100vh; display:flex; flex-direction:column; }
+    .auth-page { flex:1; display:flex; align-items:center; justify-content:center; padding:var(--space-6); padding-top:calc(var(--header-h) + var(--space-6)); min-height:100vh; position:relative; }
+    .auth-bg { position:absolute; inset:0; background:radial-gradient(ellipse at 30% 50%, rgba(0,212,255,0.08) 0%, transparent 60%); pointer-events:none; }
+    .auth-card { background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-xl); padding:var(--space-10); width:100%; max-width:420px; backdrop-filter:blur(16px); box-shadow:var(--shadow-elevated); position:relative; z-index:1; }
+    .auth-header { text-align:center; margin-bottom:var(--space-8); }
+    .auth-divider { display:flex; align-items:center; gap:var(--space-4); margin:var(--space-6) 0; }
+    .auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:var(--clr-border); }
+    .auth-divider span { font-size:0.78rem; color:var(--clr-text-faint); white-space:nowrap; }
+    .social-btn { display:flex; align-items:center; justify-content:center; gap:var(--space-3); width:100%; padding:10px; border:1px solid var(--clr-border); border-radius:var(--radius-md); background:var(--clr-glass); color:var(--clr-text); font-size:0.88rem; font-weight:500; cursor:pointer; transition:all var(--transition); margin-bottom:var(--space-3); font-family:var(--font-body); }
+    .social-btn:hover { border-color:var(--clr-primary); color:var(--clr-primary); transform:translateY(-1px); }
+    .auth-top-controls { position:fixed; top:calc((var(--header-h) - 38px)/2); right:var(--space-6); display:flex; gap:var(--space-3); z-index:1001; }
+    /* Ensure controls don't touch the card */
+    @media (max-width:480px) { .auth-card { padding:var(--space-6) var(--space-5); } .auth-top-controls { top:10px; } }
+    .pw-toggle { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--clr-text-muted); cursor:pointer; font-size:0.9rem; transition:color var(--transition); }
+    .pw-toggle:hover { color:var(--clr-primary); }
+    .pw-field { position:relative; }
+    .pw-field .form-input { padding-right:40px; }
+  </style>
+</head>
+<body>
+
+  <!-- Auth page top controls (outside card) -->
+  <div class="auth-top-controls">
+    <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+    <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+  </div>
+
+  <!-- Minimal header with brand only -->
+  <header class="header" style="background:transparent; border-bottom:none;">
+    <div class="header__inner">
+      <a href="../index.html" class="header__brand">
+        <div class="brand-logo">GQL</div>
+        <span class="brand-name">GQL<span>Forge</span></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="auth-page">
+    <div class="auth-bg"></div>
+    <div class="auth-card">
+      <div class="auth-header">
+        <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-primary); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:var(--space-3);">Welcome back</div>
+        <h1 style="font-size:1.6rem; margin-bottom:var(--space-2);">Sign In to <span class="text-primary">GQLForge</span></h1>
+        <p style="font-size:0.88rem; color:var(--clr-text-muted);">Access your dashboard, schemas, and playground.</p>
+      </div>
+
+      <!-- Social logins -->
+      <button class="social-btn"><i class="fab fa-github"></i> Continue with GitHub</button>
+      <button class="social-btn"><i class="fab fa-google" style="color:#EA4335;"></i> Continue with Google</button>
+
+      <div class="auth-divider"><span>or sign in with email</span></div>
+
+      <form data-validate-form>
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email Address <span style="color:var(--clr-error)">*</span></label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="you@email.com" data-validate="required,email" autocomplete="email" aria-required="true">
+          <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
+        </div>
+        <div class="form-group">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-2);">
+            <label class="form-label" for="loginPassword" style="margin-bottom:0;">Password <span style="color:var(--clr-error)">*</span></label>
+            <a href="#" style="font-size:0.78rem; color:var(--clr-primary);">Forgot password?</a>
+          </div>
+          <div class="pw-field">
+            <input type="password" id="loginPassword" class="form-input" placeholder="••••••••" data-validate="required" autocomplete="current-password" aria-required="true">
+            <button type="button" class="pw-toggle" onclick="togglePw('loginPassword',this)" aria-label="Toggle password visibility"><i class="fas fa-eye"></i></button>
+          </div>
+          <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
+        </div>
+
+        <div style="display:flex; align-items:center; gap:var(--space-3); margin-bottom:var(--space-6);">
+          <input type="checkbox" id="remember" style="width:16px; height:16px; accent-color:var(--clr-primary);">
+          <label for="remember" style="font-size:0.85rem; color:var(--clr-text-muted); cursor:pointer;">Remember me for 30 days</label>
+        </div>
+
+        <button type="submit" class="btn btn--primary" style="width:100%;">
+          <i class="fas fa-right-to-bracket"></i> Sign In
+        </button>
+      </form>
+
+      <div style="text-align:center; margin-top:var(--space-6); font-size:0.88rem; color:var(--clr-text-muted);">
+        Don't have an account? <a href="register.html" style="color:var(--clr-primary); font-weight:600;">Create one free</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    function togglePw(id, btn) {
+      const input = document.getElementById(id);
+      const isText = input.type === 'text';
+      input.type = isText ? 'password' : 'text';
+      btn.querySelector('i').className = isText ? 'fas fa-eye' : 'fas fa-eye-slash';
+    }
+  </script>
+</body>
+</html>

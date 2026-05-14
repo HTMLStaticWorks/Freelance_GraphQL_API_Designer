@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="GQLForge - Interactive GraphQL Playground, Schema Stitching Examples and Federation Manifests">
+  <title>GQLForge — Playground & Schema Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/dark-mode.css">
+  <link rel="stylesheet" href="../assets/css/rtl.css">
+
+  <style>
+    .schema-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-6); }
+    .schema-ex-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all var(--transition);
+      text-align: left;
+    }
+    .schema-ex-card:hover {
+      border-color: var(--clr-primary);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
+    }
+    .schema-ex-card__header {
+      padding: var(--space-4) var(--space-5);
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .schema-ex-card__body { padding: var(--space-5); }
+    .schema-ex-card__footer { padding: var(--space-4) var(--space-5); border-top: 1px solid var(--clr-border); display: flex; gap: var(--space-3); }
+
+    .perf-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .perf-table th, .perf-table td {
+      padding: var(--space-4);
+      text-align: left;
+      border-bottom: 1px solid var(--clr-border);
+      font-size: 0.88rem;
+    }
+    .perf-table th {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--clr-text-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .perf-table tr:hover td { background: var(--clr-glass); }
+
+    /* Playground styles */
+    .pg-editor {
+      position: relative;
+    }
+    .pg-editor textarea {
+      width: 100%;
+      min-height: 280px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--clr-text);
+      resize: vertical;
+      outline: none;
+      line-height: 1.8;
+      tab-size: 2;
+    }
+    .pg-editor textarea:focus { border-color: var(--clr-primary); }
+
+    .pg-result {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      min-height: 280px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: var(--clr-success);
+      overflow-y: auto;
+    }
+
+    .query-tabs {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-4);
+    }
+    .query-tab {
+      padding: 6px 14px;
+      background: var(--clr-glass);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--clr-text-muted);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .query-tab.active, .query-tab:hover {
+      color: var(--clr-primary);
+      border-color: var(--clr-primary);
+      background: var(--clr-primary-dim);
+    }
+
+    .federation-card {
+      background: var(--clr-card);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      transition: all var(--transition);
+      text-align: center;
+    }
+    .federation-card:hover {
+      border-color: var(--clr-primary);
+      box-shadow: var(--shadow-glow);
+      transform: translateY(-4px);
+    }
+    .federation-card__icon {
+      width: 56px; height: 56px;
+      background: var(--clr-primary-dim);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto var(--space-4);
+      font-size: 1.3rem;
+      color: var(--clr-primary);
+      transition: all var(--transition);
+    }
+    .federation-card:hover .federation-card__icon {
+      background: var(--clr-primary);
+      color: #0A0F1E;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__inner">
+      <a href="../index.html" class="header__brand">
+        <div class="brand-logo">GQL</div>
+        <span class="brand-name">GQL<span>Forge</span></span>
+      </a>
+      <nav class="header__nav">
+        <a href="../index.html" class="nav__link">Home</a>
+        <a href="home2.html" class="nav__link active">Home 2</a>
+        <a href="about.html" class="nav__link">About</a>
+        <a href="services.html" class="nav__link">Services</a>
+        <a href="blog.html" class="nav__link">Blog</a>
+        <a href="contact.html" class="nav__link">Contact</a>
+        <a href="dashboard.html" class="nav__link nav__dashboard"><i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard</a>
+      </nav>
+      <div class="header__actions">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+        <a href="login.html" class="btn btn--outline btn--sm">Login</a>
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu">
+    <nav class="mobile-menu__nav">
+      <a href="../index.html" class="mobile-menu__link"><i class="fas fa-house"></i> Home</a>
+      <a href="home2.html" class="mobile-menu__link"><i class="fas fa-layer-group"></i> Home 2</a>
+      <a href="about.html" class="mobile-menu__link"><i class="fas fa-user"></i> About</a>
+      <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
+      <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
+      <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
+      <a href="dashboard.html" class="mobile-menu__link" style="color:var(--clr-primary)"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    </nav>
+    <div class="mobile-menu__actions">
+      <a href="login.html" class="btn btn--outline">Login</a>
+      <a href="register.html" class="btn btn--primary">Get Started</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- SECTION 1: HERO - PLAYGROUND INTRO -->
+    <section style="padding-top: calc(var(--header-h) + var(--space-16)); padding-bottom: var(--space-12);">
+      <div class="container" style="text-align: center;">
+        <div class="section__tag"><i class="fas fa-terminal"></i> Live Playground</div>
+        <h1 style="margin: var(--space-4) 0; font-size: clamp(2rem, 5vw, 3.5rem);">
+          Test Queries <span class="text-primary">Live</span>
+        </h1>
+        <p style="max-width: 560px; margin: 0 auto var(--space-8);">
+          Try real GraphQL queries against a sample API. See performance metrics, test schema stitching, and download federation manifests instantly.
+        </p>
+
+        <div style="display: flex; gap: var(--space-6); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-8);">
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--clr-primary)" data-counter data-target="2847" data-suffix="">0</div>
+            <div style="font-size: 0.78rem; color: var(--clr-text-muted);">Queries Run Today</div>
+          </div>
+          <div style="width: 1px; background: var(--clr-border);"></div>
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--clr-primary)">42ms</div>
+            <div style="font-size: 0.78rem; color: var(--clr-text-muted);">Avg Response</div>
+          </div>
+          <div style="width: 1px; background: var(--clr-border);"></div>
+          <div style="text-align: center;">
+            <div style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--clr-success)">99.9%</div>
+            <div style="font-size: 0.78rem; color: var(--clr-text-muted);">Uptime</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE PLAYGROUND -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="playground">
+          <div class="playground__header">
+            <div class="schema-dots">
+              <div class="schema-dot"></div>
+              <div class="schema-dot"></div>
+              <div class="schema-dot"></div>
+            </div>
+            <span class="playground__title">GraphQL Playground — gqlforge.dev/graphql</span>
+            <div style="margin-left: auto; display: flex; gap: var(--space-3);">
+              <span class="badge badge--success"><i class="fas fa-circle" style="font-size:6px;"></i> Connected</span>
+            </div>
+          </div>
+
+          <!-- Query Presets -->
+          <div style="padding: var(--space-4) var(--space-6); border-bottom: 1px solid var(--clr-border); background: rgba(0,0,0,0.2);">
+            <div style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--clr-text-faint); margin-bottom: var(--space-3); text-transform: uppercase; letter-spacing: 0.1em;">Quick Queries</div>
+            <div class="query-tabs">
+              <button class="query-tab active" data-query="products">Products Query</button>
+              <button class="query-tab" data-query="users">Users + Orders</button>
+              <button class="query-tab" data-query="stitched">Stitched Schema</button>
+              <button class="query-tab" data-query="subscription">Subscription</button>
+            </div>
+          </div>
+
+          <div class="playground__body" style="grid-template-columns: 1fr 1fr; min-height: 380px;">
+            <div class="playground__pane">
+              <div class="playground__pane-title">Query Editor</div>
+              <div class="pg-editor">
+                <textarea id="queryEditor" spellcheck="false">query GetProducts {
+  products(first: 5, filter: { inStock: true }) {
+    edges {
+      node {
+        id
+        name
+        price
+        reviews {
+          rating
+          text
+        }
+      }
+    }
+    totalCount
+  }
+}</textarea>
+              </div>
+              <div style="display: flex; gap: var(--space-3); margin-top: var(--space-4); flex-wrap: wrap;">
+                <button class="btn btn--primary btn--sm" id="runQueryBtn">
+                  <i class="fas fa-play"></i> Run Query
+                </button>
+                <button class="btn btn--outline btn--sm" id="formatBtn">
+                  <i class="fas fa-wand-magic-sparkles"></i> Format
+                </button>
+                <button class="btn btn--ghost btn--sm" data-download="schema">
+                  <i class="fas fa-download"></i> Schema
+                </button>
+              </div>
+            </div>
+
+            <div class="playground__pane">
+              <div class="playground__pane-title">Response</div>
+              <div class="pg-result" id="queryResult">// Click "Run Query" to execute...</div>
+              <div style="margin-top: var(--space-4); display: flex; gap: var(--space-4); flex-wrap: wrap;">
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--clr-text-faint);">Time: <span id="queryTime" style="color: var(--clr-success);">—</span></span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--clr-text-faint);">Size: <span id="querySize" style="color: var(--clr-primary);">—</span></span>
+                <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--clr-text-faint);">DB Calls: <span id="dbCalls" style="color: var(--clr-warning);">—</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: SCHEMA STITCHING GALLERY -->
+    <section class="section" style="background: var(--clr-surface);" id="schema-gallery">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-layer-group"></i> Schema Gallery</div>
+          <h2 class="section__title">Stitching Examples & Templates</h2>
+          <p class="section__subtitle">Production-ready schema patterns. Download, fork, and adapt for your own projects.</p>
+        </div>
+
+        <div class="schema-gallery">
+          <div class="schema-ex-card reveal">
+            <div class="schema-ex-card__header">
+              <span class="mono" style="font-size: 0.8rem; color: var(--clr-primary);">e-commerce.graphql</span>
+              <span class="badge badge--success">Federation v2</span>
+            </div>
+            <div class="schema-ex-card__body">
+              <div class="code-block" style="font-size: 0.75rem; max-height: 160px; overflow-y: auto;">
+<span class="kw">type</span> <span class="type">Product</span> <span class="fn">@key</span>(fields: <span class="str">"id"</span>) {
+  id: <span class="type">ID!</span>
+  name: <span class="type">String!</span>
+  reviews: [<span class="type">Review!</span>]!
+}
+<span class="kw">type</span> <span class="type">Review</span> <span class="fn">@key</span>(fields: <span class="str">"id"</span>) {
+  rating: <span class="type">Float!</span>
+  text: <span class="type">String</span>
+}</div>
+              <p style="margin-top: var(--space-4); font-size: 0.85rem;">Full e-commerce supergraph with products, inventory, orders, and reviews as separate subgraphs.</p>
+            </div>
+            <div class="schema-ex-card__footer">
+              <button class="btn btn--primary btn--sm" data-download="schema"><i class="fas fa-download"></i> Download</button>
+              <button class="btn btn--outline btn--sm"><i class="fas fa-eye"></i> Preview</button>
+            </div>
+          </div>
+
+          <div class="schema-ex-card reveal animate-delay-1">
+            <div class="schema-ex-card__header">
+              <span class="mono" style="font-size: 0.8rem; color: var(--clr-primary);">saas-multi-tenant.graphql</span>
+              <span class="badge badge--primary">Stitched</span>
+            </div>
+            <div class="schema-ex-card__body">
+              <div class="code-block" style="font-size: 0.75rem; max-height: 160px; overflow-y: auto;">
+<span class="kw">type</span> <span class="type">Tenant</span> {
+  id: <span class="type">ID!</span>
+  users: [<span class="type">User!</span>]!
+  billing: <span class="type">BillingInfo</span>
+  usage: <span class="type">UsageStats!</span>
+}
+<span class="cm"># Stitched from 4 services</span></div>
+              <p style="margin-top: var(--space-4); font-size: 0.85rem;">Multi-tenant SaaS schema stitching 4 microservices into a unified developer experience.</p>
+            </div>
+            <div class="schema-ex-card__footer">
+              <button class="btn btn--primary btn--sm" data-download="schema"><i class="fas fa-download"></i> Download</button>
+              <button class="btn btn--outline btn--sm"><i class="fas fa-eye"></i> Preview</button>
+            </div>
+          </div>
+
+          <div class="schema-ex-card reveal animate-delay-2">
+            <div class="schema-ex-card__header">
+              <span class="mono" style="font-size: 0.8rem; color: var(--clr-primary);">social-platform.graphql</span>
+              <span class="badge badge--warning">Real-time</span>
+            </div>
+            <div class="schema-ex-card__body">
+              <div class="code-block" style="font-size: 0.75rem; max-height: 160px; overflow-y: auto;">
+<span class="kw">type</span> <span class="type">Subscription</span> {
+  newPost: <span class="type">Post!</span>
+  messageAdded(
+    roomId: <span class="type">ID!</span>
+  ): <span class="type">Message!</span>
+  onlineUsers: [<span class="type">User!</span>]!
+}</div>
+              <p style="margin-top: var(--space-4); font-size: 0.85rem;">Social platform schema with real-time subscriptions, feeds, messages, and notification streams.</p>
+            </div>
+            <div class="schema-ex-card__footer">
+              <button class="btn btn--primary btn--sm" data-download="schema"><i class="fas fa-download"></i> Download</button>
+              <button class="btn btn--outline btn--sm"><i class="fas fa-eye"></i> Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: RESOLVER PERFORMANCE TABLE -->
+    <section class="section">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-gauge-high"></i> Performance</div>
+          <h2 class="section__title">Resolver Performance Benchmarks</h2>
+          <p class="section__subtitle">Before and after applying DataLoader, caching, and batch optimizations.</p>
+        </div>
+
+        <div class="card reveal" style="text-align: left; overflow-x: auto;">
+          <table class="perf-table">
+            <thead>
+              <tr>
+                <th>Resolver</th>
+                <th>Before (ms)</th>
+                <th>After (ms)</th>
+                <th>DB Calls Before</th>
+                <th>DB Calls After</th>
+                <th>Technique</th>
+                <th>Gain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="mono" style="color: var(--clr-primary);">Product.reviews</td>
+                <td>840ms</td>
+                <td style="color: var(--clr-success);">52ms</td>
+                <td style="color: var(--clr-error);">51</td>
+                <td style="color: var(--clr-success);">1</td>
+                <td><span class="badge badge--primary">DataLoader</span></td>
+                <td style="color: var(--clr-success); font-weight: 700;">94%</td>
+              </tr>
+              <tr>
+                <td class="mono" style="color: var(--clr-primary);">User.orders</td>
+                <td>620ms</td>
+                <td style="color: var(--clr-success);">38ms</td>
+                <td style="color: var(--clr-error);">35</td>
+                <td style="color: var(--clr-success);">1</td>
+                <td><span class="badge badge--primary">Batching</span></td>
+                <td style="color: var(--clr-success); font-weight: 700;">93%</td>
+              </tr>
+              <tr>
+                <td class="mono" style="color: var(--clr-primary);">Order.items</td>
+                <td>310ms</td>
+                <td style="color: var(--clr-success);">28ms</td>
+                <td style="color: var(--clr-error);">22</td>
+                <td style="color: var(--clr-success);">1</td>
+                <td><span class="badge badge--warning">Redis Cache</span></td>
+                <td style="color: var(--clr-success); font-weight: 700;">91%</td>
+              </tr>
+              <tr>
+                <td class="mono" style="color: var(--clr-primary);">Query.products</td>
+                <td>480ms</td>
+                <td style="color: var(--clr-success);">61ms</td>
+                <td style="color: var(--clr-error);">18</td>
+                <td style="color: var(--clr-success);">2</td>
+                <td><span class="badge badge--primary">Cursor Paging</span></td>
+                <td style="color: var(--clr-success); font-weight: 700;">87%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: FEDERATION MANIFESTS -->
+    <section class="section" style="background: var(--clr-surface);">
+      <div class="container">
+        <div class="section__header">
+          <div class="section__tag"><i class="fas fa-diagram-project"></i> Federation</div>
+          <h2 class="section__title">Download Federation Manifests</h2>
+          <p class="section__subtitle">Production-ready manifest files for Apollo Federation v2. Copy, adapt, and ship.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="federation-card reveal">
+            <div class="federation-card__icon"><i class="fas fa-store"></i></div>
+            <h3 style="margin-bottom: var(--space-3);">E-Commerce Supergraph</h3>
+            <p style="font-size: 0.88rem; margin-bottom: var(--space-5);">Products, inventory, orders, reviews, and payments as federated subgraphs.</p>
+            <div style="display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-5);">
+              <span class="badge badge--primary">4 subgraphs</span>
+              <span class="badge badge--success">Federation v2</span>
+            </div>
+            <button class="btn btn--primary" data-download="schema" style="width: 100%;">
+              <i class="fas fa-download"></i> Download Manifest
+            </button>
+          </div>
+
+          <div class="federation-card reveal animate-delay-1">
+            <div class="federation-card__icon"><i class="fas fa-building"></i></div>
+            <h3 style="margin-bottom: var(--space-3);">SaaS Platform</h3>
+            <p style="font-size: 0.88rem; margin-bottom: var(--space-5);">Users, billing, analytics, and notifications stitched into one developer-facing API.</p>
+            <div style="display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-5);">
+              <span class="badge badge--primary">5 subgraphs</span>
+              <span class="badge badge--success">Multi-tenant</span>
+            </div>
+            <button class="btn btn--primary" data-download="schema" style="width: 100%;">
+              <i class="fas fa-download"></i> Download Manifest
+            </button>
+          </div>
+
+          <div class="federation-card reveal animate-delay-2">
+            <div class="federation-card__icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 style="margin-bottom: var(--space-3);">EdTech Platform</h3>
+            <p style="font-size: 0.88rem; margin-bottom: var(--space-5);">Courses, students, progress tracking, and certifications with real-time subscriptions.</p>
+            <div style="display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; margin-bottom: var(--space-5);">
+              <span class="badge badge--primary">3 subgraphs</span>
+              <span class="badge badge--warning">Real-time</span>
+            </div>
+            <button class="btn btn--primary" data-download="schema" style="width: 100%;">
+              <i class="fas fa-download"></i> Download Manifest
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: CTA / DASHBOARD PROMO -->
+    <section class="section">
+      <div class="container">
+        <div class="cta-section reveal">
+          <div class="section__tag" style="display: inline-flex;"><i class="fas fa-gauge-high"></i> Dashboard Access</div>
+          <h2 class="section__title" style="margin-top: var(--space-4);">Collaborate on Schemas<br>with Your Team</h2>
+          <p style="max-width: 520px; margin: var(--space-4) auto var(--space-8); color: var(--clr-text-muted);">
+            The dashboard gives product teams a shared space to review schema drafts, track query complexity, and test resolvers — no technical knowledge required.
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center;">
+            <a href="dashboard.html" class="btn btn--primary btn--lg"><i class="fas fa-gauge-high"></i> Open Dashboard</a>
+            <a href="register.html" class="btn btn--outline btn--lg"><i class="fas fa-user-plus"></i> Create Free Account</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <a href="../index.html" class="header__brand" style="margin-bottom: var(--space-4); display: inline-flex;">
+            <div class="brand-logo">GQL</div>
+            <span class="brand-name">GQL<span>Forge</span></span>
+          </a>
+          <p class="footer__brand-desc">Freelance GraphQL API designer. Schema stitching, N+1 solutions, and federation architecture done right.</p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+          </div>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Services</h3>
+          <ul class="footer__links">
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1 Solutions</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Playground</h3>
+          <ul class="footer__links">
+            <li><a href="home2.html" class="footer__link"><i class="fas fa-chevron-right"></i> Live Playground</a></li>
+            <li><a href="home2.html#schema-gallery" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Gallery</a></li>
+            <li><a href="blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog</a></li>
+            <li><a href="dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer__col-title">Contact</h3>
+          <div class="footer__contact-item"><i class="fas fa-envelope"></i><span>hello@gqlforge.dev</span></div>
+          <div class="footer__contact-item"><i class="fas fa-location-dot"></i><span>Remote Worldwide</span></div>
+          <div class="footer__contact-item"><i class="fas fa-clock"></i><span>Mon–Fri, 9am–6pm IST</span></div>
+          <div class="footer__contact-item"><i class="fas fa-circle" style="color:var(--clr-success);font-size:0.6rem;margin-top:6px;"></i><span style="color:var(--clr-success);font-size:0.85rem;">Open to projects</span></div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p class="footer__copy">© 2025 <span>GQLForge</span>. Crafted with GraphQL.</p>
+        <div class="footer__bottom-links">
+          <a href="#" class="footer__bottom-link">Privacy</a>
+          <a href="#" class="footer__bottom-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Playground logic
+    const queries = {
+      products: `query GetProducts {
+  products(first: 5, filter: { inStock: true }) {
+    edges {
+      node {
+        id
+        name
+        price
+        reviews {
+          rating
+          text
+        }
+      }
+    }
+    totalCount
+  }
+}`,
+      users: `query GetUsersWithOrders {
+  users(role: CUSTOMER) {
+    id
+    name
+    email
+    orders(status: DELIVERED) {
+      id
+      total
+      createdAt
+      items {
+        product { name }
+        quantity
+      }
+    }
+  }
+}`,
+      stitched: `query StitchedQuery {
+  # From Users subgraph
+  currentUser {
+    id
+    name
+    # From Billing subgraph (stitched)
+    billing {
+      plan
+      nextRenewal
+    }
+    # From Analytics subgraph (stitched)
+    usage {
+      apiCalls
+      storageGB
+    }
+  }
+}`,
+      subscription: `subscription OnNewOrder {
+  orderCreated(shopId: "shop_abc") {
+    id
+    customer {
+      name
+      email
+    }
+    items {
+      product { name }
+      quantity
+    }
+    total
+    createdAt
+  }
+}`
+    };
+
+    const results = {
+      products: `{\n  "data": {\n    "products": {\n      "edges": [\n        {"node": {"id":"prod_1","name":"API Design Kit","price":49.99,"reviews":[{"rating":4.9,"text":"Excellent schema!"}]}},\n        {"node": {"id":"prod_2","name":"DataLoader Course","price":29.99,"reviews":[{"rating":5.0,"text":"Solved all N+1s"}]}}\n      ],\n      "totalCount": 42\n    }\n  }\n}`,
+      users: `{\n  "data": {\n    "users": [\n      {"id":"u1","name":"Priya L.","email":"priya@example.com","orders":[{"id":"ord_1","total":149.99,"createdAt":"2025-01-15"}]}\n    ]\n  }\n}`,
+      stitched: `{\n  "data": {\n    "currentUser": {\n      "id": "usr_abc",\n      "name": "Arjun M.",\n      "billing": {"plan": "Pro","nextRenewal": "2025-02-01"},\n      "usage": {"apiCalls": 28400,"storageGB": 2.4}\n    }\n  }\n}`,
+      subscription: `// Subscription opened...\n// Waiting for events...\n\n{\n  "data": {\n    "orderCreated": {\n      "id": "ord_999",\n      "customer": {"name":"Ravi K.","email":"ravi@example.com"},\n      "total": 89.50,\n      "createdAt": "2025-01-20T14:32:00Z"\n    }\n  }\n}`
+    };
+
+    const metaData = {
+      products: { time: '42ms', size: '1.2 KB', db: '1 (DataLoader)' },
+      users: { time: '67ms', size: '2.4 KB', db: '2 (Batched)' },
+      stitched: { time: '88ms', size: '0.8 KB', db: '3 (Federated)' },
+      subscription: { time: '—', size: '—', db: '0 (Stream)' }
+    };
+
+    let currentQuery = 'products';
+
+    document.querySelectorAll('.query-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.query-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentQuery = tab.dataset.query;
+        document.getElementById('queryEditor').value = queries[currentQuery];
+        document.getElementById('queryResult').textContent = '// Click "Run Query" to execute...';
+        document.getElementById('queryTime').textContent = '—';
+        document.getElementById('querySize').textContent = '—';
+        document.getElementById('dbCalls').textContent = '—';
+      });
+    });
+
+    document.getElementById('runQueryBtn').addEventListener('click', () => {
+      const btn = document.getElementById('runQueryBtn');
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Running...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        const result = document.getElementById('queryResult');
+        result.textContent = results[currentQuery] || '{ "data": {} }';
+        const meta = metaData[currentQuery];
+        document.getElementById('queryTime').textContent = meta.time;
+        document.getElementById('querySize').textContent = meta.size;
+        document.getElementById('dbCalls').textContent = meta.db;
+        btn.innerHTML = '<i class="fas fa-play"></i> Run Query';
+        btn.disabled = false;
+      }, 800);
+    });
+  </script>
+</body>
+</html>
