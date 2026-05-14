@@ -4,8 +4,6 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GQLForge Blog - GraphQL articles, N+1 solutions, schema design tips">
   <title>Blog — GQLForge</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
@@ -13,7 +11,8 @@
   <style>
     .blog-card { background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-lg); overflow:hidden; transition:all var(--transition); }
     .blog-card:hover { border-color:var(--clr-primary); box-shadow:var(--shadow-glow); transform:translateY(-4px); }
-    .blog-card__img { height:200px; background:linear-gradient(135deg, var(--clr-primary-dim), rgba(0,102,255,0.15)); display:flex; align-items:center; justify-content:center; font-size:3rem; border-bottom:1px solid var(--clr-border); }
+    .blog-card__img { width: 100%; height: auto; background: transparent; display: block; border-bottom: 1px solid var(--clr-border); }
+    .blog-card__img img { width: 100%; height: auto; display: block; object-fit: contain; }
     .blog-card__body { padding:var(--space-6); }
     .blog-card__meta { display:flex; align-items:center; gap:var(--space-4); margin-bottom:var(--space-3); font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); }
     .blog-card__title { font-size:1.05rem; margin-bottom:var(--space-3); line-height:1.4; }
@@ -22,6 +21,20 @@
     .blog-card__footer { padding:var(--space-4) var(--space-6); border-top:1px solid var(--clr-border); display:flex; align-items:center; justify-content:space-between; }
     .author-mini { display:flex; align-items:center; gap:var(--space-2); font-size:0.82rem; }
     .author-mini-avatar { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--clr-primary),#0066FF); display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:700; color:#0A0F1E; }
+
+    @media (max-width: 800px) {
+      .featured-post { grid-template-columns: 1fr !important; }
+      .featured-post > div:first-child { height: 250px !important; border-right: none !important; border-bottom: 1px solid var(--clr-border); }
+      .featured-post > div:last-child { padding: var(--space-6) !important; }
+    }
+    @media (min-width: 768px) and (max-width: 991px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .blog-grid > div:last-child { grid-column: 1 / -1; max-width: 450px; margin: 0 auto; }
+    }
+    @media (max-width: 360px) {
+      .featured-post h2 { font-size: 1.25rem !important; }
+      .featured-post p { font-size: 0.85rem !important; }
+    }
   </style>
 </head>
 <body>
@@ -35,10 +48,10 @@
         <a href="services.html" class="nav__link">Services</a>
         <a href="blog.html" class="nav__link active">Blog</a>
         <a href="contact.html" class="nav__link">Contact</a>
-        <a href="dashboard.html" class="nav__link nav__dashboard"><i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard</a>
+        <a href="dashboard.html" class="nav__link nav__dashboard">Dashboard</a>
       </nav>
       <div class="header__actions">
-        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
         <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
         <a href="login.html" class="btn btn--outline btn--sm">Login</a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -53,16 +66,21 @@
       <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
       <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
       <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="dashboard.html" class="mobile-menu__link" style="color:var(--clr-primary)"><i class="fas fa-gauge-high"></i> Dashboard</a>
+      <a href="dashboard.html" class="mobile-menu__link"><i class="fas fa-gauge-high"></i> Dashboard</a>
     </nav>
-    <div class="mobile-menu__actions"><a href="login.html" class="btn btn--outline">Login</a><a href="register.html" class="btn btn--primary">Get Started</a></div>
+    <div class="mobile-menu__actions">
+      <div class="mobile-menu__utils">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+      </div>
+      <a href="login.html" class="btn btn--outline">Login</a>
+    </div>
   </div>
 
   <main>
     <section class="page-hero">
       <div class="page-hero__bg"></div>
       <div class="container">
-        <div class="breadcrumb"><a href="../index.html">Home</a><span class="breadcrumb__sep">/</span><span class="breadcrumb__current">Blog</span></div>
         <div class="section__tag" style="display:inline-flex;"><i class="fas fa-blog"></i> Blog</div>
         <h1 style="margin:var(--space-4) 0; font-size:clamp(2rem,5vw,3.5rem);">GraphQL <span class="text-primary">Deep Dives</span></h1>
         <p style="max-width:560px; margin:0 auto; color:var(--clr-text-muted);">Articles on schema design, N+1 patterns, federation architecture, and resolver performance — from the trenches.</p>
@@ -82,8 +100,10 @@
         </div>
 
         <!-- Featured post -->
-        <div class="reveal" style="background:var(--clr-card); border:1px solid var(--clr-primary); border-radius:var(--radius-xl); overflow:hidden; margin-bottom:var(--space-10); display:grid; grid-template-columns:1fr 1fr; gap:0;">
-          <div style="background:linear-gradient(135deg, rgba(0,212,255,0.12), rgba(0,102,255,0.08)); display:flex; align-items:center; justify-content:center; font-size:5rem; padding:var(--space-12); border-right:1px solid var(--clr-border);">⚡</div>
+        <div class="reveal featured-post" style="background:var(--clr-card); border:1px solid var(--clr-primary); border-radius:var(--radius-xl); overflow:hidden; margin-bottom:var(--space-10); display:grid; grid-template-columns:1fr 1fr; gap:0;">
+          <div style="width: 100%; height: auto; overflow: hidden; border-right:1px solid var(--clr-border); background: transparent; display: flex; align-items: center; justify-content: center;">
+            <img src="https://i.ytimg.com/vi/C94f2XqIWjw/maxresdefault.jpg" alt="DataLoader Performance" style="width: 100%; height: auto; display: block; object-fit: contain;">
+          </div>
           <div style="padding:var(--space-10);">
             <span class="badge badge--primary" style="margin-bottom:var(--space-4);">Featured</span>
             <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); margin-bottom:var(--space-3);">Jan 15, 2025 · 12 min read</div>
@@ -97,9 +117,11 @@
         </div>
 
         <!-- Grid -->
-        <div class="grid-3">
+        <div class="grid-3 blog-grid">
           <div class="blog-card reveal">
-            <div class="blog-card__img">🕸️</div>
+            <div class="blog-card__img" style="height: 200px; overflow: hidden;">
+              <img src="https://s3.eu-west-1.amazonaws.com/hodovi.cc/media/images/main.width-2000.jpg" alt="Apollo Federation" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="blog-card__body">
               <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 8 min</span><span>Jan 8, 2025</span><span class="badge badge--primary">Federation</span></div>
               <h3 class="blog-card__title"><a href="#">Apollo Federation v2: What Changed and Why It Matters for Your Supergraph</a></h3>
@@ -109,7 +131,9 @@
           </div>
 
           <div class="blog-card reveal animate-delay-1">
-            <div class="blog-card__img">🔒</div>
+            <div class="blog-card__img" style="height: 200px; overflow: hidden;">
+              <img src="https://nordicapis.com/wp-content/uploads/7-Tips-For-GraphQL-Security-1024x576.png" alt="GraphQL Security" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="blog-card__body">
               <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 6 min</span><span>Dec 28, 2024</span><span class="badge badge--warning">Security</span></div>
               <h3 class="blog-card__title"><a href="#">Query Depth Limiting in GraphQL: Why You Need It and How to Implement It</a></h3>
@@ -119,7 +143,9 @@
           </div>
 
           <div class="blog-card reveal animate-delay-2">
-            <div class="blog-card__img">📐</div>
+            <div class="blog-card__img" style="height: 200px; overflow: hidden;">
+              <img src="https://www.shutterstock.com/image-photo/developer-holding-glowing-hologram-sql-600nw-2705534457.jpg" alt="Schema Design" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="blog-card__body">
               <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 10 min</span><span>Dec 15, 2024</span><span class="badge badge--primary">Schema</span></div>
               <h3 class="blog-card__title"><a href="#">5 Schema Design Mistakes I See in Every GraphQL Codebase</a></h3>

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="GQLForge - Freelance GraphQL API Designer specializing in schema stitching, N+1 solutions, and federation architecture.">
+  <meta name="description"
+    content="GQLForge - Freelance GraphQL API Designer specializing in schema stitching, N+1 solutions, and federation architecture.">
   <meta name="keywords" content="GraphQL, API Design, Schema Stitching, Federation, N+1, Resolver Performance">
   <meta property="og:title" content="GQLForge - Freelance GraphQL API Designer">
-  <meta property="og:description" content="API-first portfolio with schema stitching examples, N+1 solution case studies, and collaborative GraphQL playground.">
+  <meta property="og:description"
+    content="API-first portfolio with schema stitching examples, N+1 solution case studies, and collaborative GraphQL playground.">
   <title>GQLForge — Freelance GraphQL API Designer</title>
 
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <!-- Styles -->
@@ -22,7 +22,10 @@
 
   <style>
     /* Page-specific styles */
-    .hero { min-height: 100vh; }
+    .hero {
+      min-height: 100vh;
+    }
+
     .schema-preview {
       background: var(--clr-card);
       border: 1px solid var(--clr-border);
@@ -31,20 +34,23 @@
       box-shadow: var(--shadow-elevated);
       animation: floatCard 6s ease-in-out infinite;
     }
+
     .schema-preview__bar {
-      background: rgba(0,0,0,0.4);
+      background: rgba(0, 0, 0, 0.4);
       padding: 12px 16px;
       display: flex;
       align-items: center;
       gap: 12px;
       border-bottom: 1px solid var(--clr-border);
     }
+
     .stack-icons {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
       margin-top: 12px;
     }
+
     .stack-icon {
       display: inline-flex;
       align-items: center;
@@ -80,8 +86,14 @@
       font-size: 0.78rem;
     }
 
-    .n1-before { color: var(--clr-error); }
-    .n1-after { color: var(--clr-success); }
+    .n1-before {
+      color: var(--clr-error);
+    }
+
+    .n1-after {
+      color: var(--clr-success);
+    }
+
     .n1-label {
       font-size: 0.65rem;
       text-transform: uppercase;
@@ -89,8 +101,58 @@
       color: var(--clr-text-faint);
       margin-bottom: 8px;
     }
+
+    .square-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: var(--space-5);
+      background: var(--clr-surface2);
+    }
+    .square-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 1440px) {
+      .features__grid { grid-template-columns: repeat(3, 1fr) !important; }
+      .features__grid > div:nth-last-child(-n+2) { grid-column: auto; } /* Reset if needed */
+      /* To center last 2 cards in a 3-col grid is tricky with just CSS grid, 
+         using a flex fallback or specific positioning */
+      .features-grid-centered { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); }
+      .features-grid-centered > div { width: calc(33.333% - (var(--space-6) * 2 / 3)); }
+    }
+
+    @media (min-width: 768px) and (max-width: 991px) {
+      .services-grid-centered, .testimonials-grid-centered { 
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: var(--space-6); 
+      }
+      .services-grid-centered > div:last-child, 
+      .testimonials-grid-centered > div:last-child { 
+        grid-column: 1 / -1; 
+        width: calc(50% - (var(--space-6) / 2)); 
+        margin: 0 auto; 
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .hero { min-height: 70vh !important; padding: 120px 0 60px !important; }
+    }
+
+    @media (max-width: 360px) {
+      .container { padding: 0 var(--space-4) !important; }
+      .hero__title { font-size: 2.25rem !important; }
+      .section__title { font-size: 1.75rem !important; }
+      .hero__desc { font-size: 0.88rem !important; }
+      .hero__stats { gap: var(--space-4) !important; }
+      .hero__stat-value { font-size: 1.5rem !important; }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -110,16 +172,12 @@
         <a href="pages/services.html" class="nav__link">Services</a>
         <a href="pages/blog.html" class="nav__link">Blog</a>
         <a href="pages/contact.html" class="nav__link">Contact</a>
-        <a href="pages/dashboard.html" class="nav__link nav__dashboard">
-          <i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard
-        </a>
+        <a href="pages/dashboard.html" class="nav__link nav__dashboard">Dashboard</a>
       </nav>
 
       <!-- Actions (right) -->
       <div class="header__actions">
-        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">
-          <i class="fas fa-language"></i>
-        </button>
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
         <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme">
           <i class="fas fa-sun"></i>
         </button>
@@ -140,11 +198,15 @@
       <a href="pages/services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
       <a href="pages/blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
       <a href="pages/contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="pages/dashboard.html" class="mobile-menu__link" style="color: var(--clr-primary);"><i class="fas fa-gauge-high"></i> Dashboard</a>
+      <a href="pages/dashboard.html" class="mobile-menu__link"><i class="fas fa-gauge-high"></i> Dashboard</a>
     </nav>
     <div class="mobile-menu__actions">
+      <div class="mobile-menu__utils">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i
+            class="fas fa-sun"></i></button>
+      </div>
       <a href="pages/login.html" class="btn btn--outline">Login</a>
-      <a href="pages/register.html" class="btn btn--primary">Get Started</a>
     </div>
   </div>
 
@@ -174,7 +236,8 @@
           </p>
 
           <p class="hero__desc" style="margin-top: -12px; font-size: 0.95rem;">
-            <span class="mono text-primary" data-typing>Schema Stitching Expert</span><span style="color: var(--clr-primary); font-family: var(--font-mono);">|</span>
+            <span class="mono text-primary" data-typing>Schema Stitching Expert</span><span
+              style="color: var(--clr-primary); font-family: var(--font-mono);">|</span>
           </p>
 
           <div class="hero__actions">
@@ -203,49 +266,13 @@
         </div>
 
         <!-- Hero Visual (desktop) -->
-        <div class="hero__visual" aria-hidden="true">
-          <div class="schema-preview">
-            <div class="schema-preview__bar">
-              <div class="schema-dots">
-                <div class="schema-dot"></div>
-                <div class="schema-dot"></div>
-                <div class="schema-dot"></div>
-              </div>
-              <span class="schema-filename">schema.graphql</span>
-            </div>
-            <div class="code-block" style="border:none; border-radius:0; margin:0; font-size:0.77rem; background: rgba(0,0,0,0.5);">
-<span class="cm"># Federation-ready schema</span>
-<span class="kw">type</span> <span class="type">Product</span> <span class="fn">@key</span>(fields: <span class="str">"id"</span>) {
-  id: <span class="type">ID!</span>
-  name: <span class="type">String!</span>
-  price: <span class="type">Float!</span>
-  <span class="cm"># Resolved via DataLoader</span>
-  reviews: [<span class="type">Review!</span>]! <span class="fn">@defer</span>
-  inventory: <span class="type">Inventory</span>
-}
 
-<span class="kw">type</span> <span class="type">Query</span> {
-  products(
-    first: <span class="type">Int</span>
-    filter: <span class="type">ProductFilter</span>
-  ): <span class="type">ProductConnection!</span>
-}
-            </div>
-            <div style="padding: 16px; border-top: 1px solid var(--clr-border); display: flex; align-items: center; justify-content: space-between;">
-              <div class="stack-icons">
-                <span class="stack-icon"><i class="fas fa-check-circle"></i> N+1 Solved</span>
-                <span class="stack-icon"><i class="fas fa-bolt"></i> DataLoader</span>
-              </div>
-              <span class="badge badge--success"><i class="fas fa-circle" style="font-size:6px;"></i> Live</span>
-            </div>
-          </div>
-        </div>
+
+      </div>
+      </div>
       </div>
 
-      <div class="scroll-indicator" aria-hidden="true">
-        <i class="fas fa-chevron-down"></i>
-        <span>Scroll</span>
-      </div>
+
     </section>
 
     <!-- ==========================================
@@ -256,44 +283,69 @@
         <div class="section__header">
           <div class="section__tag"><i class="fas fa-star"></i> Core Expertise</div>
           <h2 class="section__title" id="features-heading">Why Teams Choose GQLForge</h2>
-          <p class="section__subtitle">From schema design to production deployment, I cover every aspect of your GraphQL journey.</p>
+          <p class="section__subtitle">From schema design to production deployment, I cover every aspect of your GraphQL
+            journey.</p>
         </div>
 
-        <div class="features__grid">
+        <div class="features__grid features-grid-centered">
           <div class="card reveal">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=400" alt="Schema Stitching">
+            </div>
             <div class="card__icon"><i class="fas fa-sitemap"></i></div>
             <h3 class="card__title">Schema Stitching</h3>
-            <p>Combine multiple GraphQL schemas into a unified API layer. Seamless data merging across microservices with type safety preserved throughout.</p>
+            <p>Combine multiple GraphQL schemas into a unified API layer. Seamless data merging across microservices
+              with type safety preserved throughout.</p>
           </div>
 
           <div class="card reveal animate-delay-1">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=400" alt="N+1 Elimination">
+            </div>
             <div class="card__icon"><i class="fas fa-bolt"></i></div>
             <h3 class="card__title">N+1 Elimination</h3>
-            <p>DataLoader patterns, batching strategies, and caching layers that turn hundreds of database calls into just a few. Measured, proven results.</p>
+            <p>DataLoader patterns, batching strategies, and caching layers that turn hundreds of database calls into
+              just a few. Measured, proven results.</p>
           </div>
 
           <div class="card reveal animate-delay-2">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=400" alt="Federation Architecture">
+            </div>
             <div class="card__icon"><i class="fas fa-network-wired"></i></div>
             <h3 class="card__title">Federation Architecture</h3>
-            <p>Design Apollo Federation supergraphs that distribute ownership across teams while maintaining a single, coherent API surface.</p>
+            <p>Design Apollo Federation supergraphs that distribute ownership across teams while maintaining a single,
+              coherent API surface.</p>
           </div>
 
           <div class="card reveal animate-delay-3">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400" alt="Resolver Performance">
+            </div>
             <div class="card__icon"><i class="fas fa-tachometer-alt"></i></div>
             <h3 class="card__title">Resolver Performance</h3>
-            <p>Profile, analyze, and optimize resolvers. Implement field-level caching and smart batching for sub-100ms query response times.</p>
+            <p>Profile, analyze, and optimize resolvers. Implement field-level caching and smart batching for sub-100ms
+              query response times.</p>
           </div>
 
           <div class="card reveal animate-delay-1">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=400" alt="Security & Auth">
+            </div>
             <div class="card__icon"><i class="fas fa-shield-halved"></i></div>
             <h3 class="card__title">Security & Auth</h3>
-            <p>JWT, OAuth, field-level permissions with directives. Query depth limiting, complexity scoring, and rate throttling out of the box.</p>
+            <p>JWT, OAuth, field-level permissions with directives. Query depth limiting, complexity scoring, and rate
+              throttling out of the box.</p>
           </div>
 
           <div class="card reveal animate-delay-2">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?auto=format&fit=crop&q=80&w=400" alt="Schema Evolution">
+            </div>
             <div class="card__icon"><i class="fas fa-code-branch"></i></div>
             <h3 class="card__title">Schema Evolution</h3>
-            <p>Deprecation strategies, versioning patterns, and backwards-compatible schema migrations that keep your API alive without breaking clients.</p>
+            <p>Deprecation strategies, versioning patterns, and backwards-compatible schema migrations that keep your
+              API alive without breaking clients.</p>
           </div>
         </div>
       </div>
@@ -307,7 +359,8 @@
         <div class="section__header">
           <div class="section__tag"><i class="fas fa-microscope"></i> Case Studies</div>
           <h2 class="section__title" id="case-heading">N+1 Solutions & Real Results</h2>
-          <p class="section__subtitle">Real problems, real fixes. Every case study includes before/after metrics and the exact technique used.</p>
+          <p class="section__subtitle">Real problems, real fixes. Every case study includes before/after metrics and the
+            exact technique used.</p>
         </div>
 
         <div style="display: flex; flex-direction: column; gap: var(--space-6);">
@@ -315,12 +368,14 @@
             <div>
               <div class="case-study-card__tag">E-Commerce Platform</div>
               <h3 style="margin-bottom: var(--space-4);">Product Catalog with 500+ Queries/sec</h3>
-              <p style="margin-bottom: var(--space-5);">The product listing page was triggering 1 query per product to fetch reviews. With 50 products per page, that's 51 DB calls per user request.</p>
+              <p style="margin-bottom: var(--space-5);">The product listing page was triggering 1 query per product to
+                fetch reviews. With 50 products per page, that's 51 DB calls per user request.</p>
               <div class="n1-demo">
                 <div class="n1-label">Before (N+1)</div>
                 <div class="n1-before">SELECT * FROM reviews WHERE product_id = 1;
-SELECT * FROM reviews WHERE product_id = 2;
-<span style="color: var(--clr-text-faint)">... × 48 more queries</span></div>
+                  SELECT * FROM reviews WHERE product_id = 2;
+                  <span style="color: var(--clr-text-faint)">... × 48 more queries</span>
+                </div>
                 <div style="height: 12px;"></div>
                 <div class="n1-label">After (DataLoader)</div>
                 <div class="n1-after">SELECT * FROM reviews WHERE product_id IN (1,2,...50);</div>
@@ -350,7 +405,8 @@ SELECT * FROM reviews WHERE product_id = 2;
             <div>
               <div class="case-study-card__tag">SaaS Dashboard</div>
               <h3 style="margin-bottom: var(--space-4);">Multi-Tenant Analytics with Schema Stitching</h3>
-              <p style="margin-bottom: var(--space-5);">Merged 4 separate GraphQL services (users, billing, analytics, notifications) into one unified supergraph. Teams kept ownership, clients got simplicity.</p>
+              <p style="margin-bottom: var(--space-5);">Merged 4 separate GraphQL services (users, billing, analytics,
+                notifications) into one unified supergraph. Teams kept ownership, clients got simplicity.</p>
               <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                 <span class="tech-pill"><i class="fas fa-diagram-project"></i> Apollo Federation</span>
                 <span class="tech-pill"><i class="fas fa-code-merge"></i> Schema Stitching</span>
@@ -388,32 +444,49 @@ SELECT * FROM reviews WHERE product_id = 2;
         <div class="section__header">
           <div class="section__tag"><i class="fas fa-briefcase"></i> Services</div>
           <h2 class="section__title" id="services-heading">What I Build For You</h2>
-          <p class="section__subtitle">From greenfield APIs to performance rescue missions — specialized GraphQL solutions for every stage.</p>
+          <p class="section__subtitle">From greenfield APIs to performance rescue missions — specialized GraphQL
+            solutions for every stage.</p>
         </div>
 
-        <div class="services__grid">
+        <div class="services__grid services-grid-centered">
           <div class="service-card reveal">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=400" alt="API Architecture">
+            </div>
             <div class="service-card__num">01</div>
             <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-drafting-compass"></i></div>
             <h3 class="card__title">API Architecture Design</h3>
-            <p>Complete schema design from scratch. Type definitions, resolvers, mutations, subscriptions — all documented and production-ready.</p>
-            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+            <p>Complete schema design from scratch. Type definitions, resolvers, mutations, subscriptions — all
+              documented and production-ready.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn
+              More <i class="fas fa-arrow-right"></i></a>
           </div>
 
           <div class="service-card reveal animate-delay-1">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=400" alt="Performance Audit">
+            </div>
             <div class="service-card__num">02</div>
-            <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-magnifying-glass-chart"></i>
+            </div>
             <h3 class="card__title">Performance Audit</h3>
-            <p>Deep-dive resolver profiling, query complexity analysis, and a full optimization report with prioritized improvements.</p>
-            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+            <p>Deep-dive resolver profiling, query complexity analysis, and a full optimization report with prioritized
+              improvements.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn
+              More <i class="fas fa-arrow-right"></i></a>
           </div>
 
           <div class="service-card reveal animate-delay-2">
+            <div class="square-img-wrap">
+              <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=400" alt="Team Training">
+            </div>
             <div class="service-card__num">03</div>
             <div class="card__icon" style="margin: 0 auto var(--space-5);"><i class="fas fa-people-group"></i></div>
             <h3 class="card__title">Team Training</h3>
-            <p>Workshops for engineering teams covering GraphQL best practices, DataLoader patterns, and federation governance models.</p>
-            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn More <i class="fas fa-arrow-right"></i></a>
+            <p>Workshops for engineering teams covering GraphQL best practices, DataLoader patterns, and federation
+              governance models.</p>
+            <a href="pages/services.html" class="btn btn--outline btn--sm" style="margin-top: var(--space-5);">Learn
+              More <i class="fas fa-arrow-right"></i></a>
           </div>
         </div>
       </div>
@@ -427,13 +500,18 @@ SELECT * FROM reviews WHERE product_id = 2;
         <div class="section__header">
           <div class="section__tag"><i class="fas fa-comments"></i> Testimonials</div>
           <h2 class="section__title" id="testimonials-heading">What Teams Are Saying</h2>
-          <p class="section__subtitle">From startups to enterprise product teams — here's what working with GQLForge delivers.</p>
+          <p class="section__subtitle">From startups to enterprise product teams — here's what working with GQLForge
+            delivers.</p>
         </div>
 
-        <div class="grid-3">
+        <div class="grid-3 testimonials-grid-centered">
           <div class="testimonial-card reveal">
+            <div class="square-img-wrap" style="aspect-ratio: 16/9; height: 120px; width: auto; margin: 0 auto var(--space-5);">
+              <img src="https://images.unsplash.com/photo-1522071823991-b5182991e38f?auto=format&fit=crop&q=80&w=400" alt="Client Testimonial">
+            </div>
             <div class="testimonial-card__quote">"</div>
-            <p class="testimonial-card__text">"GQLForge cut our API response times by 87%. The DataLoader implementation was surgical — zero regressions, pure performance gain."</p>
+            <p class="testimonial-card__text">"GQLForge cut our API response times by 87%. The DataLoader implementation
+              was surgical — zero regressions, pure performance gain."</p>
             <div class="testimonial-card__author">
               <div class="testimonial-card__avatar">SK</div>
               <div>
@@ -444,8 +522,12 @@ SELECT * FROM reviews WHERE product_id = 2;
           </div>
 
           <div class="testimonial-card reveal animate-delay-1">
+            <div class="square-img-wrap" style="aspect-ratio: 16/9; height: 120px; width: auto; margin: 0 auto var(--space-5);">
+              <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=400" alt="Client Testimonial">
+            </div>
             <div class="testimonial-card__quote">"</div>
-            <p class="testimonial-card__text">"The schema stitching work unified 5 of our services in 2 weeks. Our frontend teams couldn't believe how clean the API became."</p>
+            <p class="testimonial-card__text">"The schema stitching work unified 5 of our services in 2 weeks. Our
+              frontend teams couldn't believe how clean the API became."</p>
             <div class="testimonial-card__author">
               <div class="testimonial-card__avatar">AM</div>
               <div>
@@ -456,8 +538,12 @@ SELECT * FROM reviews WHERE product_id = 2;
           </div>
 
           <div class="testimonial-card reveal animate-delay-2">
+            <div class="square-img-wrap" style="aspect-ratio: 16/9; height: 120px; width: auto; margin: 0 auto var(--space-5);">
+              <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&q=80&w=400" alt="Client Testimonial">
+            </div>
             <div class="testimonial-card__quote">"</div>
-            <p class="testimonial-card__text">"The dashboard makes schema reviews so much easier for our product team. Non-engineers can now participate in API design discussions."</p>
+            <p class="testimonial-card__text">"The dashboard makes schema reviews so much easier for our product team.
+              Non-engineers can now participate in API design discussions."</p>
             <div class="testimonial-card__author">
               <div class="testimonial-card__avatar">PL</div>
               <div>
@@ -477,11 +563,12 @@ SELECT * FROM reviews WHERE product_id = 2;
       <div class="container">
         <div class="cta-section reveal">
           <div class="section__tag" style="display: inline-flex;"><i class="fas fa-rocket"></i> Start a Project</div>
-          <h2 class="section__title" id="cta-heading" style="margin-top: var(--space-4);">Ready to Build Your<br>Perfect GraphQL API?</h2>
+          <h2 class="section__title" id="cta-heading" style="margin-top: var(--space-4);">Ready to Build Your<br>Perfect
+            GraphQL API?</h2>
           <p style="max-width: 500px; margin: var(--space-4) auto var(--space-8); color: var(--clr-text-muted);">
             Let's discuss your schema challenges, performance goals, and timeline. First consultation is always free.
           </p>
-          <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center;">
+          <div class="btn-group">
             <a href="pages/contact.html" class="btn btn--primary btn--lg">
               <i class="fas fa-calendar-check"></i> Book a Consultation
             </a>
@@ -505,7 +592,8 @@ SELECT * FROM reviews WHERE product_id = 2;
             <span class="brand-name">GQL<span>Forge</span></span>
           </a>
           <p class="footer__brand-desc">
-            Freelance GraphQL API designer crafting schemas that scale. Schema stitching, N+1 solutions, and federation architecture.
+            Freelance GraphQL API designer crafting schemas that scale. Schema stitching, N+1 solutions, and federation
+            architecture.
           </p>
           <div class="footer__social">
             <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
@@ -519,11 +607,16 @@ SELECT * FROM reviews WHERE product_id = 2;
         <div>
           <h3 class="footer__col-title">Services</h3>
           <ul class="footer__links">
-            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
-            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a></li>
-            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
-            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1 Solutions</a></li>
-            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team Training</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API
+                Architecture</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema
+                Stitching</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance
+                Audit</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1
+                Solutions</a></li>
+            <li><a href="pages/services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team
+                Training</a></li>
           </ul>
         </div>
 
@@ -531,11 +624,16 @@ SELECT * FROM reviews WHERE product_id = 2;
         <div>
           <h3 class="footer__col-title">Resources</h3>
           <ul class="footer__links">
-            <li><a href="pages/home2.html" class="footer__link"><i class="fas fa-chevron-right"></i> GraphQL Playground</a></li>
-            <li><a href="pages/blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog & Articles</a></li>
-            <li><a href="pages/about.html" class="footer__link"><i class="fas fa-chevron-right"></i> Case Studies</a></li>
-            <li><a href="pages/dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a></li>
-            <li><a href="documentation/README.html" class="footer__link"><i class="fas fa-chevron-right"></i> Documentation</a></li>
+            <li><a href="pages/home2.html" class="footer__link"><i class="fas fa-chevron-right"></i> GraphQL
+                Playground</a></li>
+            <li><a href="pages/blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog & Articles</a>
+            </li>
+            <li><a href="pages/about.html" class="footer__link"><i class="fas fa-chevron-right"></i> Case Studies</a>
+            </li>
+            <li><a href="pages/dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a>
+            </li>
+            <li><a href="documentation/README.html" class="footer__link"><i class="fas fa-chevron-right"></i>
+                Documentation</a></li>
           </ul>
         </div>
 
@@ -562,7 +660,8 @@ SELECT * FROM reviews WHERE product_id = 2;
       </div>
 
       <div class="footer__bottom">
-        <p class="footer__copy">© 2025 <span>GQLForge</span>. Crafted with <i class="fas fa-heart" style="color: var(--clr-error);"></i> and GraphQL.</p>
+        <p class="footer__copy">© 2025 <span>GQLForge</span>. Crafted with <i class="fas fa-heart"
+            style="color: var(--clr-error);"></i> and GraphQL.</p>
         <div class="footer__bottom-links">
           <a href="#" class="footer__bottom-link">Privacy Policy</a>
           <a href="#" class="footer__bottom-link">Terms of Service</a>
@@ -575,4 +674,5 @@ SELECT * FROM reviews WHERE product_id = 2;
   <!-- Scripts -->
   <script src="assets/js/main.js"></script>
 </body>
+
 </html>

@@ -418,12 +418,19 @@ const SmoothScroll = (() => {
   const init = () => {
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', (e) => {
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
-          const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
-          window.scrollTo({ top, behavior: 'smooth' });
+        const href = link.getAttribute('href');
+        if (!href || href === '#') return;
+
+        try {
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 72;
+            const top = target.getBoundingClientRect().top + window.scrollY - headerH - 16;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        } catch (err) {
+          // Ignore invalid selectors like href="#"
         }
       });
     });

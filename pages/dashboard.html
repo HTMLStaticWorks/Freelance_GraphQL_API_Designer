@@ -3,320 +3,447 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard — GQLForge</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
   <link rel="stylesheet" href="../assets/css/rtl.css">
   <link rel="stylesheet" href="../assets/css/dashboard.css">
+  <style>
+    .dash-section { display: none !important; }
+    .dash-section.active { display: block !important; }
+    
+    /* Extra styles for content density */
+    .content-card { background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-6); }
+    .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); }
+    
+    @media (max-width: 600px) {
+      .content-grid { grid-template-columns: 1fr !important; }
+      .mobile-center { text-align: center !important; }
+      .mobile-btn-center { display: flex !important; justify-content: center !important; }
+      .mobile-btn-center button, .mobile-btn-center .btn { margin: 0 auto !important; width: auto !important; min-width: 200px; }
+    }
+    .data-row { display: flex; align-items: center; justify-content: space-between; padding: var(--space-4) 0; border-bottom: 1px solid var(--clr-border); }
+    .data-row:last-child { border-bottom: none; }
+    .data-label { color: var(--clr-text-muted); font-size: 0.9rem; }
+    .data-value { font-weight: 600; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+    .tag--blue { background: rgba(0, 212, 255, 0.1); color: var(--clr-primary); }
+    .tag--green { background: rgba(0, 229, 160, 0.1); color: var(--clr-success); }
+    .tag--red { background: rgba(255, 77, 109, 0.1); color: var(--clr-error); }
+    
+    .resolver-bar-container { height: 8px; background: var(--clr-surface2); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+    .resolver-bar-fill { height: 100%; background: var(--clr-primary); transition: width 1s ease-out; }
+  </style>
 </head>
 <body class="dashboard-page">
 
-  <!-- FIXED DASHBOARD HEADER -->
   <header class="dash-header">
-    <!-- Brand -->
-    <a href="../index.html" class="dash-header__brand">
-      <div class="brand-logo">GQL</div>
-      <span class="brand-name" style="display:none;">GQL<span>Forge</span></span>
-    </a>
-    <span class="dash-header__title">Schema Dashboard</span>
-
-    <!-- Hamburger (mobile/tablet only) -->
-    <button class="header__action-btn dash-hamburger" aria-label="Toggle sidebar" aria-expanded="false" style="display:flex;">
-      <i class="fas fa-bars"></i>
-    </button>
-
+    <button class="dash-header__hamburger" id="dash-hamburger" aria-label="Toggle Menu"><i class="fas fa-bars"></i></button>
+    <span class="dash-header__title" id="dash-page-title">Schema Dashboard — Overview</span>
     <div class="dash-header__actions">
-      <!-- Notifications -->
       <div style="position:relative;">
-        <button class="notif-btn" aria-label="Notifications">
-          <i class="fas fa-bell"></i>
-          <div class="notif-badge"></div>
-        </button>
-        <div data-notif-dropdown style="display:none; position:absolute; top:calc(100% + 8px); right:0; width:300px; background:var(--clr-surface); border:1px solid var(--clr-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-elevated); z-index:200; overflow:hidden;"></div>
+        <button class="notif-btn"><i class="fas fa-bell"></i><div class="notif-badge"></div></button>
       </div>
-
-      <!-- RTL + Theme -->
-      <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
-      <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
-
-      <!-- Profile -->
-      <div class="profile-btn" tabindex="0" aria-label="Profile menu">
-        <div class="profile-avatar">KS</div>
-        <div class="profile-info">
-          <div class="profile-name">Kiran Selvaraj</div>
-          <div class="profile-role">Pro Plan</div>
+      <button class="header__action-btn" data-rtl-toggle title="Toggle RTL">RTL</button>
+      <button class="header__action-btn" data-theme-toggle title="Toggle Theme"><i class="fas fa-sun"></i></button>
+      <div class="profile-btn">
+        <div class="profile-avatar">
+          <img src="https://media.istockphoto.com/id/2099403180/photo/laughing-yougn-businesswoman-standing-with-her-arms-crossed-against-an-office-wall.jpg?s=612x612&w=0&k=20&c=kn6TM5y-26ohkuoAU9FiWn4pYoyVPS7xfWLVyBGj_TA=" alt="Kiran Selvaraj">
         </div>
-        <i class="fas fa-chevron-down" style="font-size:0.7rem; color:var(--clr-text-muted);"></i>
+        <div class="profile-info"><div class="profile-name">Kiran Selvaraj</div><div class="profile-role">Pro Plan</div></div>
       </div>
     </div>
   </header>
 
-  <!-- SIDEBAR -->
-  <aside class="dash-sidebar" role="navigation" aria-label="Dashboard navigation">
+  <aside class="dash-sidebar" id="dash-sidebar">
+    <div class="sidebar__brand">
+      <a href="../index.html" style="text-decoration: none; display: flex; align-items: center; gap: var(--space-3);">
+        <div class="brand-logo">GQL</div>
+        <span class="brand-name">GQL<span>Forge</span></span>
+      </a>
+    </div>
     <div class="sidebar__section">
       <div class="sidebar__section-title">Main</div>
       <nav class="sidebar__nav">
-        <a href="dashboard.html" class="sidebar__link active"><i class="fas fa-gauge-high"></i> Overview</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-diagram-project"></i> Schema Drafts <span class="sidebar__badge">4</span></a>
-        <a href="#" class="sidebar__link"><i class="fas fa-terminal"></i> Playground</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-tachometer-alt"></i> Resolver Perf</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-chart-line"></i> Query Analytics</a>
+        <a href="#" class="sidebar__link active" data-section="overview"><i class="fas fa-gauge-high"></i> Overview</a>
+        <a href="#" class="sidebar__link" data-section="drafts"><i class="fas fa-diagram-project"></i> Schema Drafts <span class="sidebar__badge">4</span></a>
+        <a href="#" class="sidebar__link" data-section="playground"><i class="fas fa-terminal"></i> Playground</a>
+        <a href="#" class="sidebar__link" data-section="performance"><i class="fas fa-tachometer-alt"></i> Resolver Perf</a>
+        <a href="#" class="sidebar__link" data-section="analytics"><i class="fas fa-chart-line"></i> Query Analytics</a>
       </nav>
     </div>
-
     <div class="sidebar__divider"></div>
-
     <div class="sidebar__section">
       <div class="sidebar__section-title">Management</div>
       <nav class="sidebar__nav">
-        <a href="#" class="sidebar__link"><i class="fas fa-users"></i> Team <span class="sidebar__badge">3</span></a>
-        <a href="#" class="sidebar__link"><i class="fas fa-download"></i> Manifests</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-shield-halved"></i> Security Rules</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-bell"></i> Notifications <span class="sidebar__badge">3</span></a>
+        <a href="#" class="sidebar__link" data-section="team"><i class="fas fa-users"></i> Team</a>
+        <a href="#" class="sidebar__link" data-section="manifests"><i class="fas fa-download"></i> Manifests</a>
+        <a href="#" class="sidebar__link" data-section="security"><i class="fas fa-shield-halved"></i> Security Rules</a>
+        <a href="#" class="sidebar__link" data-section="notifications"><i class="fas fa-bell"></i> Notifications <span class="sidebar__badge">3</span></a>
       </nav>
     </div>
-
     <div class="sidebar__divider"></div>
-
     <div class="sidebar__section">
       <div class="sidebar__section-title">Account</div>
       <nav class="sidebar__nav">
-        <a href="#" class="sidebar__link"><i class="fas fa-user-circle"></i> Profile</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-gear"></i> Settings</a>
-        <a href="#" class="sidebar__link"><i class="fas fa-credit-card"></i> Billing</a>
+        <a href="#" class="sidebar__link" data-section="profile"><i class="fas fa-user-circle"></i> Profile</a>
+        <a href="#" class="sidebar__link" data-section="settings"><i class="fas fa-gear"></i> Settings</a>
+        <a href="#" class="sidebar__link" data-section="billing"><i class="fas fa-credit-card"></i> Billing</a>
       </nav>
     </div>
-
-    <div class="sidebar__footer">
-      <div class="sidebar__user">
-        <div class="profile-avatar" style="width:34px;height:34px;font-size:0.75rem;">KS</div>
-        <div class="sidebar__user-info">
-          <div class="sidebar__user-name">Kiran Selvaraj</div>
-          <div class="sidebar__user-plan">Pro Plan</div>
-        </div>
-        <a href="login.html" title="Logout" style="color:var(--clr-text-faint); font-size:0.85rem; transition:color var(--transition);" onmouseover="this.style.color='var(--clr-error)'" onmouseout="this.style.color='var(--clr-text-faint)'"><i class="fas fa-right-from-bracket"></i></a>
-      </div>
+    <div class="sidebar__divider"></div>
+    <div class="sidebar__section" style="margin-top:auto;">
+      <nav class="sidebar__nav">
+        <a href="login.html" class="sidebar__link" style="color:var(--clr-error);"><i class="fas fa-right-from-bracket"></i> Logout</a>
+      </nav>
     </div>
   </aside>
 
-  <!-- Sidebar overlay (mobile) -->
-  <div class="sidebar-overlay"></div>
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
-  <!-- MAIN CONTENT -->
   <main class="dash-main">
     <div class="dash-content">
-
-      <!-- Page Header -->
-      <div class="dash-page-header">
-        <div>
-          <h1 class="dash-page-title">Overview</h1>
-          <p class="dash-page-subtitle">Schema performance, query metrics, and team activity at a glance.</p>
+      
+      <!-- SECTION: OVERVIEW -->
+      <div id="overview" class="dash-section active">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Overview</h1><p class="dash-page-subtitle">Summary of your federated GraphQL ecosystem.</p></div>
+          <button class="btn btn--primary btn--sm"><i class="fas fa-download"></i> Export Report</button>
         </div>
-        <div style="display:flex; gap:var(--space-3); flex-wrap:wrap;">
-          <button class="btn btn--outline btn--sm"><i class="fas fa-calendar"></i> Last 30 Days</button>
-          <button class="btn btn--primary btn--sm" data-download="schema"><i class="fas fa-download"></i> Export Report</button>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="stat-card__label">Queries (24h)</div><div class="stat-card__value">1.2M</div><div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 12.5%</div></div>
+          <div class="stat-card"><div class="stat-card__label">P95 Latency</div><div class="stat-card__value">38ms</div><div class="stat-card__change down"><i class="fas fa-arrow-down"></i> 4ms</div></div>
+          <div class="stat-card"><div class="stat-card__label">Active Subgraphs</div><div class="stat-card__value">8</div><div class="stat-card__change">Stable</div></div>
+          <div class="stat-card"><div class="stat-card__label">Error Rate</div><div class="stat-card__value">0.04%</div><div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 0.01%</div></div>
         </div>
-      </div>
-
-      <!-- STAT CARDS -->
-      <div class="stat-cards">
-        <div class="stat-card">
-          <div class="stat-card__top">
-            <div class="stat-card__icon"><i class="fas fa-bolt"></i></div>
-            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 12%</div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h3 style="margin-bottom:var(--space-4);">Traffic Volume</h3>
+            <div class="chart-area" data-chart="complexity" style="height:200px;"></div>
           </div>
-          <div class="stat-card__value" data-live="queries">1,284</div>
-          <div class="stat-card__label">Queries Today</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__top">
-            <div class="stat-card__icon"><i class="fas fa-stopwatch"></i></div>
-            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 8%</div>
-          </div>
-          <div class="stat-card__value">42ms</div>
-          <div class="stat-card__label">Avg Response Time</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__top">
-            <div class="stat-card__icon"><i class="fas fa-diagram-project"></i></div>
-            <div class="stat-card__change up"><i class="fas fa-arrow-up"></i> 2</div>
-          </div>
-          <div class="stat-card__value">4</div>
-          <div class="stat-card__label">Schema Drafts</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__top">
-            <div class="stat-card__icon"><i class="fas fa-database"></i></div>
-            <div class="stat-card__change down"><i class="fas fa-arrow-down"></i> 94%</div>
-          </div>
-          <div class="stat-card__value" style="color:var(--clr-success);">1</div>
-          <div class="stat-card__label">Avg DB Calls/Query</div>
-        </div>
-      </div>
-
-      <!-- MAIN GRID: CHART + DONUT -->
-      <div class="dash-grid">
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div>
-              <div class="dash-panel__title">Query Complexity Over Time</div>
-              <div class="dash-panel__subtitle">Daily average complexity score (lower is better)</div>
-            </div>
-            <select class="form-select form-input" style="width:auto; padding:6px 12px; font-size:0.8rem;">
-              <option>Last 14 Days</option>
-              <option>Last 30 Days</option>
-              <option>Last 90 Days</option>
-            </select>
-          </div>
-          <div class="chart-area" data-chart="complexity" style="align-items:flex-end;"></div>
-          <div style="display:flex; gap:var(--space-6); margin-top:var(--space-4); flex-wrap:wrap;">
-            <div style="display:flex; align-items:center; gap:var(--space-2); font-size:0.8rem; color:var(--clr-text-muted);">
-              <div style="width:10px; height:10px; border-radius:2px; background:var(--clr-primary);"></div> Complexity Score
-            </div>
-          </div>
-        </div>
-
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div>
-              <div class="dash-panel__title">Resolver Health</div>
-              <div class="dash-panel__subtitle">N+1 detection status</div>
-            </div>
-          </div>
-          <div class="donut-chart">
-            <div class="donut-center">
-              <div class="donut-value">94%</div>
-              <div class="donut-label">Optimized</div>
-            </div>
-          </div>
-          <div style="display:flex; flex-direction:column; gap:var(--space-3);">
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
-              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:var(--clr-primary);"></div> Optimized</div>
-              <span class="mono">45%</span>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
-              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:#0066FF;"></div> Batched</div>
-              <span class="mono">27%</span>
-            </div>
-            <div style="display:flex; align-items:center; justify-content:space-between; font-size:0.82rem;">
-              <div style="display:flex; align-items:center; gap:var(--space-2);"><div style="width:10px;height:10px;border-radius:2px;background:rgba(0,212,255,0.3);"></div> Needs Work</div>
-              <span class="mono" style="color:var(--clr-warning);">28%</span>
-            </div>
+          <div class="content-card">
+            <h3 style="margin-bottom:var(--space-4);">Recent Activity</h3>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>User API</strong> schema v4.2.1 published</div><div class="activity-time">2m ago</div></div>
+            <div class="activity-item"><div class="activity-dot error"></div><div class="activity-text"><strong>Payments</strong> subgraph latency spike</div><div class="activity-time">14m ago</div></div>
+            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text">New team member <strong>Sarah</strong> joined</div><div class="activity-time">1h ago</div></div>
           </div>
         </div>
       </div>
 
-      <!-- SCHEMA DRAFTS TABLE + ACTIVITY -->
-      <div class="dash-grid">
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div>
-              <div class="dash-panel__title">Schema Drafts</div>
-              <div class="dash-panel__subtitle">Current review queue</div>
-            </div>
-            <button class="btn btn--primary btn--sm"><i class="fas fa-plus"></i> New Draft</button>
-          </div>
-          <div style="overflow-x:auto;">
+      <!-- SECTION: SCHEMA DRAFTS -->
+      <div id="drafts" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Schema Drafts</h1><p class="dash-page-subtitle">Manage your evolving GraphQL type definitions.</p></div>
+          <button class="btn btn--primary btn--sm"><i class="fas fa-plus"></i> New Draft</button>
+        </div>
+        <div class="content-card">
+          <div class="table-wrapper">
             <table class="data-table">
-              <thead>
-                <tr>
-                  <th>Schema Name</th>
-                  <th>Status</th>
-                  <th>Complexity</th>
-                  <th>Updated</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
+              <thead><tr><th>Name</th><th>Subgraph</th><th>Last Updated</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody>
-                <tr>
-                  <td><div class="data-table__name">e-commerce-v3.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">42 types · Federation v2</div></td>
-                  <td><span class="badge badge--success">Published</span></td>
-                  <td><div>Score: 28<div class="complexity-meter"><div class="complexity-fill low" style="width:28%;"></div></div></div></td>
-                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">2h ago</td>
-                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm" title="Edit"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema" title="Download"><i class="fas fa-download"></i></button></div></td>
-                </tr>
-                <tr>
-                  <td><div class="data-table__name">saas-dashboard.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">28 types · Stitched</div></td>
-                  <td><span class="badge badge--warning">In Review</span></td>
-                  <td><div>Score: 61<div class="complexity-meter"><div class="complexity-fill med" style="width:61%;"></div></div></div></td>
-                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">1d ago</td>
-                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
-                </tr>
-                <tr>
-                  <td><div class="data-table__name">social-platform.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">35 types · Real-time</div></td>
-                  <td><span class="badge badge--primary">Draft</span></td>
-                  <td><div>Score: 45<div class="complexity-meter"><div class="complexity-fill med" style="width:45%;"></div></div></div></td>
-                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">3d ago</td>
-                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
-                </tr>
-                <tr>
-                  <td><div class="data-table__name">healthcare-api.graphql</div><div style="font-size:0.75rem;color:var(--clr-text-faint);">18 types · HIPAA mode</div></td>
-                  <td><span class="badge badge--error">Needs Fix</span></td>
-                  <td><div>Score: 88<div class="complexity-meter"><div class="complexity-fill high" style="width:88%;"></div></div></div></td>
-                  <td style="font-family:var(--font-mono);font-size:0.75rem;color:var(--clr-text-faint);">5d ago</td>
-                  <td><div class="data-table__actions"><button class="btn btn--ghost btn--sm"><i class="fas fa-pen"></i></button><button class="btn btn--ghost btn--sm" data-download="schema"><i class="fas fa-download"></i></button></div></td>
-                </tr>
+                <tr><td><strong>ProductCatalogV2</strong></td><td>Inventory</td><td>Oct 24, 14:20</td><td><span class="tag tag--blue">Drafting</span></td><td><button class="btn btn--glass btn--sm"><i class="fas fa-edit"></i></button></td></tr>
+                <tr><td><strong>OrderFulfillment</strong></td><td>Logistics</td><td>Oct 23, 09:12</td><td><span class="tag tag--green">Review</span></td><td><button class="btn btn--glass btn--sm"><i class="fas fa-eye"></i></button></td></tr>
+                <tr><td><strong>UserProfileExt</strong></td><td>Identity</td><td>Oct 21, 11:45</td><td><span class="tag tag--green">Ready</span></td><td><button class="btn btn--glass btn--sm"><i class="fas fa-check"></i></button></td></tr>
+                <tr><td><strong>DeprecatedFields</strong></td><td>Core</td><td>Oct 19, 16:30</td><td><span class="tag tag--red">Stale</span></td><td><button class="btn btn--glass btn--sm"><i class="fas fa-trash"></i></button></td></tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
 
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div class="dash-panel__title">Activity Feed</div>
+      <!-- SECTION: PLAYGROUND -->
+      <div id="playground" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Interactive Playground</h1><p class="dash-page-subtitle">Test queries against your federated schema.</p></div>
+        </div>
+        <div class="content-grid" style="grid-template-columns: 1fr 1fr;">
+          <div class="content-card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:var(--space-4);">
+              <h3>Query Editor</h3>
+              <button class="btn btn--primary btn--sm">Run <i class="fas fa-play"></i></button>
+            </div>
+            <textarea class="query-input" style="min-height:400px; width:100%; border:none; background:rgba(0,0,0,0.05); color:var(--clr-primary); font-family:'Space Mono'; padding:15px; border-radius:8px;">query GetProductDetails($id: ID!) {
+  product(id: $id) {
+    name
+    price
+    inventory {
+      available
+      warehouse
+    }
+    reviews(first: 5) {
+      rating
+      comment
+    }
+  }
+}</textarea>
           </div>
-          <div>
-            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Schema published</strong> — e-commerce-v3 is now live</div><div class="activity-time">2h ago</div></div>
-            <div class="activity-item"><div class="activity-dot warn"></div><div class="activity-text"><strong>High complexity</strong> detected in healthcare-api resolver</div><div class="activity-time">5h ago</div></div>
-            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Team member</strong> Priya added a comment to saas-dashboard draft</div><div class="activity-time">1d ago</div></div>
-            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>Manifest downloaded</strong> — e-commerce federation manifest (v3)</div><div class="activity-time">1d ago</div></div>
-            <div class="activity-item"><div class="activity-dot error"></div><div class="activity-text"><strong>N+1 detected</strong> in User.orders resolver — 28 DB calls</div><div class="activity-time">2d ago</div></div>
-            <div class="activity-item"><div class="activity-dot"></div><div class="activity-text"><strong>DataLoader applied</strong> — reduced Product.reviews from 51→1 calls</div><div class="activity-time">3d ago</div></div>
+          <div class="content-card">
+            <h3 style="margin-bottom:var(--space-4);">Execution Results</h3>
+            <div class="query-result" style="min-height:445px; background:rgba(0,0,0,0.1); border-radius:8px; padding:15px; font-family:'Space Mono'; font-size:0.9rem; color:var(--clr-text);">[
+  { "id": "1", "name": "Super-Fast API Kit" }
+]</div>
           </div>
         </div>
       </div>
 
-      <!-- RESOLVER PERFORMANCE + PLAYGROUND -->
-      <div class="dash-grid">
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div>
-              <div class="dash-panel__title">Resolver Performance</div>
-              <div class="dash-panel__subtitle">Average response time (ms)</div>
+      <!-- SECTION: PERFORMANCE -->
+      <div id="performance" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Resolver Performance</h1><p class="dash-page-subtitle">Deep dive into subgraph latencies and bottlenecks.</p></div>
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>Slowest Resolvers</h3>
+            <div style="margin-top:20px;">
+              <div class="resolver-item">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>User.orders</span><span class="data-value">340ms</span></div>
+                <div class="resolver-bar-container"><div class="resolver-bar-fill" style="width:85%; background:var(--clr-error);"></div></div>
+              </div>
+              <div class="resolver-item" style="margin-top:20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>Search.products</span><span class="data-value">120ms</span></div>
+                <div class="resolver-bar-container"><div class="resolver-bar-fill" style="width:45%; background:var(--clr-warning);"></div></div>
+              </div>
+              <div class="resolver-item" style="margin-top:20px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;"><span>Product.reviews</span><span class="data-value">85ms</span></div>
+                <div class="resolver-bar-container"><div class="resolver-bar-fill" style="width:30%;"></div></div>
+              </div>
             </div>
-            <a href="#" class="btn btn--ghost btn--sm">View All <i class="fas fa-arrow-right"></i></a>
           </div>
-          <div>
-            <div class="resolver-item"><div class="resolver-name">Query.products</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:42%;"></div></div><div class="resolver-val">42ms</div></div>
-            <div class="resolver-item"><div class="resolver-name">Product.reviews</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:15%;"></div></div><div class="resolver-val">52ms</div></div>
-            <div class="resolver-item"><div class="resolver-name">User.orders</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:20%;"></div></div><div class="resolver-val">38ms</div></div>
-            <div class="resolver-item"><div class="resolver-name">Order.items</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:12%;"></div></div><div class="resolver-val">28ms</div></div>
-            <div class="resolver-item" style="border-bottom:none;"><div class="resolver-name">Mutation.createOrder</div><div class="resolver-bar-wrap"><div class="resolver-bar" style="width:65%;"></div></div><div class="resolver-val" style="color:var(--clr-warning);">130ms</div></div>
+          <div class="content-card">
+            <h3>Subgraph Health</h3>
+            <div class="data-row"><div class="data-label">Inventory API</div><div class="tag tag--green">Healthy</div></div>
+            <div class="data-row"><div class="data-label">Identity Service</div><div class="tag tag--green">Healthy</div></div>
+            <div class="data-row"><div class="data-label">Payment Gateway</div><div class="tag tag--red">Degraded</div></div>
+            <div class="data-row"><div class="data-label">Search Engine</div><div class="tag tag--green">Healthy</div></div>
           </div>
         </div>
+      </div>
 
-        <div class="dash-panel">
-          <div class="dash-panel__header">
-            <div class="dash-panel__title">Quick Playground</div>
+      <!-- SECTION: ANALYTICS -->
+      <div id="analytics" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Query Analytics</h1><p class="dash-page-subtitle">Track query patterns and schema usage.</p></div>
+        </div>
+        <div class="content-card" style="height:350px; padding: var(--space-8); display:flex; align-items:flex-end; gap: 8px; background: rgba(0,0,0,0.2);">
+          <div class="graph-bar" style="flex:1; height:40%; background:var(--clr-primary); opacity:0.6; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:65%; background:var(--clr-primary); opacity:0.8; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:50%; background:var(--clr-primary); opacity:0.6; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:85%; background:var(--clr-primary); opacity:1; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:70%; background:var(--clr-primary); opacity:0.7; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:55%; background:var(--clr-primary); opacity:0.6; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:90%; background:var(--clr-success); opacity:1; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:75%; background:var(--clr-primary); opacity:0.8; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:60%; background:var(--clr-primary); opacity:0.6; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:45%; background:var(--clr-primary); opacity:0.5; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:80%; background:var(--clr-primary); opacity:0.9; border-radius:4px 4px 0 0;"></div>
+          <div class="graph-bar" style="flex:1; height:95%; background:var(--clr-success); opacity:1; border-radius:4px 4px 0 0;"></div>
+        </div>
+        <div class="content-grid">
+          <div class="content-card"><h3>Top Queries</h3><div class="data-row"><span>GetProductDetails</span><span>42k/hr</span></div><div class="data-row"><span>ListAllItems</span><span>12k/hr</span></div></div>
+          <div class="content-card"><h3>Error Distribution</h3><div class="data-row"><span>FORBIDDEN</span><span>62%</span></div><div class="data-row"><span>INTERNAL_SERVER_ERROR</span><span>38%</span></div></div>
+        </div>
+      </div>
+
+      <!-- SECTION: TEAM -->
+      <div id="team" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Team Management</h1><p class="dash-page-subtitle">Collaborate with other designers and developers.</p></div>
+          <button class="btn btn--primary btn--sm"><i class="fas fa-user-plus"></i> Invite Member</button>
+        </div>
+        <div class="content-card">
+          <div class="activity-item">
+            <div class="profile-avatar">KS</div>
+            <div class="activity-text"><strong>Kiran Selvaraj</strong><br><small>Administrator • Owner</small></div>
+            <div class="tag tag--blue">Owner</div>
           </div>
-          <textarea data-playground="query" class="query-input" style="min-height:180px;" spellcheck="false">query {
-  products(first: 3) {
-    edges {
-      node {
-        id
-        name
-        price
-      }
-    }
-  }
-}</textarea>
-          <div style="display:flex; gap:var(--space-3); margin:var(--space-4) 0;">
-            <button class="btn btn--primary btn--sm" data-playground="run"><i class="fas fa-play"></i> Run Query</button>
-            <button class="btn btn--outline btn--sm" data-playground="format"><i class="fas fa-wand-magic-sparkles"></i> Format</button>
+          <div class="activity-item">
+            <div class="profile-avatar" style="background:var(--clr-success);">JD</div>
+            <div class="activity-text"><strong>John Doe</strong><br><small>Lead Architect</small></div>
+            <div class="tag tag--green">Editor</div>
           </div>
-          <div data-playground="result" class="query-result" style="min-height:120px; font-size:0.78rem;">// Run a query to see results...</div>
+          <div class="activity-item">
+            <div class="profile-avatar" style="background:var(--clr-warning);">AM</div>
+            <div class="activity-text"><strong>Alice Miller</strong><br><small>Frontend Developer</small></div>
+            <div class="tag">Viewer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: MANIFESTS -->
+      <div id="manifests" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Federation Manifests</h1><p class="dash-page-subtitle">Compiled schema files for your gateway.</p></div>
+        </div>
+        <div class="content-card">
+          <div class="data-row">
+            <div><i class="fas fa-file-code" style="color:var(--clr-primary); margin-right:10px;"></i> <strong>supergraph-v42.graphql</strong><br><small>Generated 2h ago • 1.2MB</small></div>
+            <button class="btn btn--glass btn--sm"><i class="fas fa-download"></i> Download</button>
+          </div>
+          <div class="data-row">
+            <div><i class="fas fa-file-code" style="color:var(--clr-text-muted); margin-right:10px;"></i> <strong>supergraph-v41.graphql</strong><br><small>Generated 1d ago • 1.1MB</small></div>
+            <button class="btn btn--glass btn--sm"><i class="fas fa-download"></i> Download</button>
+          </div>
+          <div class="data-row">
+            <div><i class="fas fa-file-code" style="color:var(--clr-text-muted); margin-right:10px;"></i> <strong>supergraph-v40.graphql</strong><br><small>Generated 5d ago • 1.1MB</small></div>
+            <button class="btn btn--glass btn--sm"><i class="fas fa-download"></i> Download</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: SECURITY -->
+      <div id="security" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Security Rules</h1><p class="dash-page-subtitle">Protect your API from malicious queries.</p></div>
+        </div>
+        <div class="content-grid">
+          <div class="content-card">
+            <h3>Query Depth Protection</h3>
+            <p style="font-size:0.85rem; color:var(--clr-text-muted); margin:10px 0;">Limit the depth of queries to prevent stack overflow attacks.</p>
+            <div class="form-group">
+              <label class="form-label">Maximum Depth</label>
+              <input type="number" class="form-input" value="15">
+            </div>
+          </div>
+          <div class="content-card">
+            <h3>Complexity Analysis</h3>
+            <p style="font-size:0.85rem; color:var(--clr-text-muted); margin:10px 0;">Assign costs to fields and limit total query cost.</p>
+            <div class="form-group">
+              <label class="form-label">Cost Limit</label>
+              <input type="number" class="form-input" value="1000">
+            </div>
+          </div>
+        </div>
+        <div class="content-card">
+          <h3>Allow-listing</h3>
+          <div class="data-row"><span>Enable Production Allow-list</span><div style="width:40px;height:20px;background:var(--clr-primary);border-radius:10px;position:relative;"><div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div></div>
+        </div>
+      </div>
+
+      <!-- SECTION: NOTIFICATIONS -->
+      <div id="notifications" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Notifications</h1><p class="dash-page-subtitle">Stay informed about your GraphQL infrastructure.</p></div>
+        </div>
+        <div class="content-card">
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text"><strong>Security Alert:</strong> Large query blocked from IP 192.168.1.1</div>
+            <div class="activity-time">Just now</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot"></div>
+            <div class="activity-text"><strong>Schema Update:</strong> User API subgraph was successfully merged.</div>
+            <div class="activity-time">2h ago</div>
+          </div>
+          <div class="activity-item">
+            <div class="activity-dot warn"></div>
+            <div class="activity-text"><strong>Maintenance:</strong> Gateway nodes will restart at 02:00 UTC.</div>
+            <div class="activity-time">5h ago</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: PROFILE -->
+      <div id="profile" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Your Profile</h1><p class="dash-page-subtitle">Manage your account and preferences.</p></div>
+        </div>
+        <div class="profile-container" style="max-width:900px; margin: 0 auto;">
+          <!-- Profile Banner & Info -->
+          <div class="content-card profile-card--hero" style="padding: 0; overflow: hidden; position: relative; margin-bottom: var(--space-8);">
+            <div class="profile-banner" style="height: 120px; background: linear-gradient(135deg, var(--clr-primary-alt), var(--clr-primary)); opacity: 0.2;"></div>
+            <div style="padding: var(--space-8); margin-top: -60px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+              <div class="profile-avatar" style="width:120px; height:120px; border-radius: 50%; border: 4px solid var(--clr-surface); box-shadow: var(--shadow-lg); overflow: hidden; background: var(--clr-surface2); position: relative;">
+                <img src="https://media.istockphoto.com/id/2099403180/photo/laughing-yougn-businesswoman-standing-with-her-arms-crossed-against-an-office-wall.jpg?s=612x612&w=0&k=20&c=kn6TM5y-26ohkuoAU9FiWn4pYoyVPS7xfWLVyBGj_TA=" alt="Kiran Selvaraj" style="width:100%; height:100%; object-fit:cover;">
+                <div style="position:absolute; inset:0; border: 1px solid rgba(255,255,255,0.1); border-radius: 50%;"></div>
+              </div>
+              <h2 style="margin-top: var(--space-4); font-size: 1.8rem;">Kiran Selvaraj</h2>
+              <p style="color:var(--clr-text-muted); font-size: 1rem; margin-bottom: var(--space-4);">Lead Developer • GQLForge Core Team</p>
+              <div class="profile-badges" style="display: flex; gap: var(--space-2); justify-content: center; margin-bottom: var(--space-6);">
+                <span class="tag tag--green" style="padding: 4px 12px; font-size: 0.7rem;">Verified Identity</span>
+                <span class="tag tag--blue" style="padding: 4px 12px; font-size: 0.7rem;">Pro Account</span>
+              </div>
+              
+              <!-- Profile Stats Bar -->
+              <div style="display: flex; gap: var(--space-8); padding-top: var(--space-6); border-top: 1px solid var(--clr-border); width: 100%; justify-content: center; flex-wrap: wrap;">
+                <div style="text-align: center;"><div style="font-size: 1.2rem; font-weight: 800; color: var(--clr-primary);">24</div><div style="font-size: 0.75rem; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: 1px;">Projects</div></div>
+                <div style="text-align: center;"><div style="font-size: 1.2rem; font-weight: 800; color: var(--clr-primary);">1.2M</div><div style="font-size: 0.75rem; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: 1px;">API Calls</div></div>
+                <div style="text-align: center;"><div style="font-size: 1.2rem; font-weight: 800; color: var(--clr-primary);">98%</div><div style="font-size: 0.75rem; color: var(--clr-text-muted); text-transform: uppercase; letter-spacing: 1px;">Reliability</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-grid profile-main-grid" style="grid-template-columns: 1fr;">
+            <!-- Main Info Card -->
+            <div class="content-card">
+              <h3 style="margin-bottom: var(--space-6); display: flex; align-items: center; gap: 10px;"><i class="fas fa-user-gear" style="color:var(--clr-primary);"></i> Personal Details</h3>
+              <div class="content-grid" style="grid-template-columns: 1fr;">
+                <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" value="Kiran"></div>
+                <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" value="Selvaraj"></div>
+              </div>
+              <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" value="kiran@gqlforge.com"></div>
+              <div class="form-group"><label class="form-label">Biography</label><textarea class="form-input" style="min-height: 100px; padding: 12px;">Full-stack developer focused on federated GraphQL architectures and schema performance optimization.</textarea></div>
+              
+              <div class="mobile-btn-center" style="margin-top:var(--space-6); display:flex; gap:var(--space-4); flex-wrap: wrap;">
+                <button class="btn btn--primary" style="flex: 1; min-width: 140px;">Update Profile</button>
+                <button class="btn btn--outline" style="flex: 1; min-width: 140px;">Cancel</button>
+              </div>
+            </div>
+
+            <!-- Side Cards -->
+            <div class="profile-side-cards" style="display: flex; flex-direction: column; gap: var(--space-6);">
+              <div class="content-card">
+                <h3 style="margin-bottom: var(--space-4); font-size: 1rem;">Security Settings</h3>
+                <div class="data-row"><div class="data-label">Two-Factor Auth</div><div class="tag tag--green">Enabled</div></div>
+                <div class="data-row"><div class="data-label">Last Login</div><div class="data-value">2h ago</div></div>
+                <button class="btn btn--outline btn--sm" style="width: 100%; margin-top: 15px;">Change Password</button>
+              </div>
+              
+              <div class="content-card">
+                <h3 style="margin-bottom: var(--space-4); font-size: 1rem;">Platform Tier</h3>
+                <p style="font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: 15px;">You are currently on the Pro Plan. Next billing date: Nov 1, 2026.</p>
+                <button class="btn btn--glass btn--sm" style="width: 100%;">View Billing Details</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION: SETTINGS -->
+      <div id="settings" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Workspace Settings</h1><p class="dash-page-subtitle">Configure global dashboard behavior.</p></div>
+        </div>
+        <div class="content-card" style="max-width:700px;">
+          <h3>General Settings</h3>
+          <div class="form-group"><label class="form-label">Project Name</label><input type="text" class="form-input" value="GQLForge Platform"></div>
+          <div class="form-group"><label class="form-label">Default Region</label><select class="form-input"><option>US-EAST-1</option><option>EU-WEST-1</option></select></div>
+          <div class="data-row"><span>Enable Auto-Save Drafts</span><div style="width:40px;height:20px;background:var(--clr-primary);border-radius:10px;position:relative;"><div style="width:16px;height:16px;background:white;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div></div>
+        </div>
+      </div>
+
+      <!-- SECTION: BILLING -->
+      <div id="billing" class="dash-section">
+        <div class="dash-page-header">
+          <div><h1 class="dash-page-title">Billing & Subscription</h1><p class="dash-page-subtitle">Manage your plan and invoices.</p></div>
+        </div>
+        <div class="content-grid">
+          <div class="content-card mobile-center" style="border: 2px solid var(--clr-primary); display: flex; flex-direction: column; align-items: center; text-align: center;">
+            <div class="tag tag--blue" style="margin-bottom:10px;">Current Plan</div>
+            <h2>Pro Tier</h2>
+            <p style="font-size:2rem; font-weight:800; margin:10px 0;">$49<small style="font-size:1rem; font-weight:400; color:var(--clr-text-muted);">/mo</small></p>
+            <ul style="list-style:none; padding:0; margin:20px auto; font-size:0.9rem; line-height:1.8; text-align: left; width: fit-content; display: block;">
+              <li style="white-space: nowrap;"><i class="fas fa-check" style="color:var(--clr-success); margin-right:8px;"></i> Unlimited Subgraphs</li>
+              <li style="white-space: nowrap;"><i class="fas fa-check" style="color:var(--clr-success); margin-right:8px;"></i> 30-Day Retention</li>
+              <li style="white-space: nowrap;"><i class="fas fa-check" style="color:var(--clr-success); margin-right:8px;"></i> Custom Complexity Rules</li>
+            </ul>
+            <button class="btn btn--outline" style="width:100%; max-width: 280px;">Change Plan</button>
+          </div>
+          <div class="content-card">
+            <h3>Recent Invoices</h3>
+            <div class="data-row"><div class="data-label">Oct 1, 2026</div><div class="data-value">$49.00</div><button class="btn btn--glass btn--sm"><i class="fas fa-file-pdf"></i></button></div>
+            <div class="data-row"><div class="data-label">Sep 1, 2026</div><div class="data-value">$49.00</div><button class="btn btn--glass btn--sm"><i class="fas fa-file-pdf"></i></button></div>
+          </div>
         </div>
       </div>
 
@@ -326,19 +453,64 @@
   <script src="../assets/js/main.js"></script>
   <script src="../assets/js/dashboard.js"></script>
   <script>
-    // Connect dash hamburger
-    document.querySelector('.dash-hamburger').addEventListener('click', () => {
-      const sidebar = document.querySelector('.dash-sidebar');
-      const overlay = document.querySelector('.sidebar-overlay');
-      const isOpen = sidebar.classList.toggle('open');
-      overlay.classList.toggle('show', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
-    document.querySelector('.sidebar-overlay').addEventListener('click', () => {
-      document.querySelector('.dash-sidebar').classList.remove('open');
-      document.querySelector('.sidebar-overlay').classList.remove('show');
-      document.body.style.overflow = '';
-    });
+    // INLINE TAB SWITCHING LOGIC
+    (function() {
+      const links = document.querySelectorAll('.sidebar__link');
+      const sections = document.querySelectorAll('.dash-section');
+      const pageTitle = document.getElementById('dash-page-title');
+      const sidebar = document.getElementById('dash-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      const hamburger = document.getElementById('dash-hamburger');
+
+      function switchSection(targetId) {
+        if (!targetId) return;
+        
+        sections.forEach(s => s.classList.remove('active'));
+        links.forEach(l => l.classList.remove('active'));
+
+        const target = document.getElementById(targetId);
+        if (target) target.classList.add('active');
+
+        const activeLink = document.querySelector(`[data-section="${targetId}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
+        if (pageTitle) {
+          const titleText = activeLink ? activeLink.innerText.trim() : 'Dashboard';
+          pageTitle.textContent = `Schema Dashboard — ${titleText}`;
+        }
+
+        if (sidebar) sidebar.classList.remove('open');
+        if (overlay) overlay.classList.remove('show');
+        
+        // Trigger chart re-render if overview
+        if (targetId === 'overview' && typeof ChartRenderer !== 'undefined') {
+          ChartRenderer.init();
+        }
+      }
+
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const targetId = link.getAttribute('data-section');
+          if (targetId) {
+            e.preventDefault();
+            switchSection(targetId);
+          }
+        });
+      });
+
+      if (hamburger) {
+        hamburger.addEventListener('click', () => {
+          sidebar.classList.toggle('open');
+          overlay.classList.toggle('show');
+        });
+      }
+      if (overlay) {
+        overlay.addEventListener('click', () => {
+          sidebar.classList.remove('open');
+          overlay.classList.remove('show');
+        });
+      }
+    })();
   </script>
 </body>
 </html>

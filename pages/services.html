@@ -5,12 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GQLForge Services - GraphQL API Architecture, Schema Stitching, N+1 Solutions, Performance Audits & Team Training">
   <title>Services — GQLForge</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
   <link rel="stylesheet" href="../assets/css/rtl.css">
+  <style>
+    @media (min-width: 768px) and (max-width: 991px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; gap: var(--space-6); }
+      .pricing-grid > div:last-child { 
+        grid-column: 1 / -1; 
+        width: calc(50% - (var(--space-6) / 2)); 
+        margin: 0 auto; 
+      }
+    }
+  </style>
 </head>
 <body>
   <header class="header">
@@ -26,10 +34,10 @@
         <a href="services.html" class="nav__link active">Services</a>
         <a href="blog.html" class="nav__link">Blog</a>
         <a href="contact.html" class="nav__link">Contact</a>
-        <a href="dashboard.html" class="nav__link nav__dashboard"><i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard</a>
+        <a href="dashboard.html" class="nav__link nav__dashboard">Dashboard</a>
       </nav>
       <div class="header__actions">
-        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
         <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
         <a href="login.html" class="btn btn--outline btn--sm">Login</a>
         <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -44,11 +52,14 @@
       <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
       <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
       <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="dashboard.html" class="mobile-menu__link" style="color:var(--clr-primary)"><i class="fas fa-gauge-high"></i> Dashboard</a>
+      <a href="dashboard.html" class="mobile-menu__link"><i class="fas fa-gauge-high"></i> Dashboard</a>
     </nav>
     <div class="mobile-menu__actions">
+      <div class="mobile-menu__utils">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+      </div>
       <a href="login.html" class="btn btn--outline">Login</a>
-      <a href="register.html" class="btn btn--primary">Get Started</a>
     </div>
   </div>
 
@@ -73,7 +84,9 @@
         </div>
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:var(--space-6);">
           <div class="service-card reveal" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-drafting-compass"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=600" alt="Schema Design" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">01</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">API Architecture & Schema Design</h3>
             <p style="margin-bottom:var(--space-5);">Complete schema design from scratch — types, queries, mutations, subscriptions, directives, and federation entities. Delivered with documentation and resolver stubs.</p>
@@ -90,7 +103,9 @@
           </div>
 
           <div class="service-card reveal animate-delay-1" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-magnifying-glass-chart"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://peakads.vn/wp-content/uploads/2021/07/performance.png" alt="Performance Audit" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">02</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">Performance Audit & N+1 Solutions</h3>
             <p style="margin-bottom:var(--space-5);">Comprehensive resolver profiling, query complexity analysis, and DataLoader implementation. Get a written report with all issues ranked by impact, plus the fixes applied.</p>
@@ -107,7 +122,9 @@
           </div>
 
           <div class="service-card reveal animate-delay-2" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-network-wired"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://www.exasol.com/app/uploads/2025/12/thumbnail-blog-from-data-federation.jpg" alt="Federation Architecture" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">03</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">Federation Architecture</h3>
             <p style="margin-bottom:var(--space-5);">Design and implement Apollo Federation supergraphs. Distributed schema ownership, subgraph boundaries, entity references, and a governance model your team can follow.</p>
@@ -124,7 +141,9 @@
           </div>
 
           <div class="service-card reveal" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-people-group"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&q=80&w=600" alt="Team Workshops" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">04</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">Team Training & Workshops</h3>
             <p style="margin-bottom:var(--space-5);">Hands-on workshops for engineering teams covering GraphQL fundamentals, advanced patterns, DataLoader, caching, and federation governance models.</p>
@@ -141,7 +160,9 @@
           </div>
 
           <div class="service-card reveal animate-delay-1" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-shield-halved"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=600" alt="Security Hardening" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">05</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">Security & Auth Hardening</h3>
             <p style="margin-bottom:var(--space-5);">Add query depth limiting, complexity scoring, field-level permissions, rate throttling, and JWT/OAuth integration to your existing GraphQL API.</p>
@@ -158,7 +179,9 @@
           </div>
 
           <div class="service-card reveal animate-delay-2" style="text-align:left; padding:var(--space-8);">
-            <div class="card__icon" style="margin:0 0 var(--space-5);"><i class="fas fa-code-branch"></i></div>
+            <div style="height: 180px; border-radius: var(--radius-lg); overflow: hidden; margin-bottom: var(--space-6);">
+              <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=600" alt="Schema Migration" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
             <div class="service-card__num">06</div>
             <h3 style="margin:var(--space-3) 0 var(--space-4);">Schema Migration & Evolution</h3>
             <p style="margin-bottom:var(--space-5);">Migrate from REST to GraphQL or evolve an existing schema without breaking clients. Deprecation strategies, versioning patterns, and a step-by-step migration plan.</p>
@@ -185,7 +208,7 @@
           <h2 class="section__title">Simple, Transparent Pricing</h2>
           <p class="section__subtitle">No hidden fees. Pick the engagement model that works for your team.</p>
         </div>
-        <div class="grid-3">
+        <div class="grid-3 pricing-grid">
           <div class="pricing-card reveal">
             <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); text-transform:uppercase; letter-spacing:0.1em;">Starter</div>
             <div class="pricing-amount"><sup>$</sup>800</div>
@@ -234,41 +257,7 @@
     </section>
 
     <!-- SECTION 3: FAQ & CTA -->
-    <section class="section">
-      <div class="container">
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-16); align-items:start;">
-          <div class="reveal">
-            <div class="section__tag" style="display:inline-flex; margin-bottom:var(--space-5);"><i class="fas fa-circle-question"></i> FAQ</div>
-            <h2 style="margin-bottom:var(--space-8);">Common Questions</h2>
-            <div class="faq-item">
-              <div class="faq-question">How long does a typical project take? <i class="fas fa-chevron-down"></i></div>
-              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Audits take 1–2 weeks. Full schema designs take 2–4 weeks. Federation migrations are 4–8 weeks depending on complexity. I'll give you a precise estimate after our discovery call.</p></div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">Do you work with existing codebases? <i class="fas fa-chevron-down"></i></div>
-              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Absolutely. Most of my work is improving or extending existing GraphQL APIs. I'll need repo access and a brief architecture walkthrough to get started.</p></div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">What tech stacks do you support? <i class="fas fa-chevron-down"></i></div>
-              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Apollo Server, Yoga, Pothos, Hasura, and custom GraphQL setups. Node.js / TypeScript primarily, but I can work with Python (Strawberry/Ariadne) and Go (gqlgen) schemas too.</p></div>
-            </div>
-            <div class="faq-item">
-              <div class="faq-question">Is there a free consultation? <i class="fas fa-chevron-down"></i></div>
-              <div class="faq-answer"><p style="color:var(--clr-text-muted);">Yes — the first 30-minute discovery call is always free. We'll discuss your goals, current pain points, and whether we're a good fit before any commitment.</p></div>
-            </div>
-          </div>
-          <div class="reveal animate-delay-1">
-            <div class="cta-section" style="padding:var(--space-10);">
-              <div class="section__tag" style="display:inline-flex;"><i class="fas fa-calendar-check"></i> Book Now</div>
-              <h2 style="font-size:1.6rem; margin:var(--space-4) 0;">Ready to Start?</h2>
-              <p style="color:var(--clr-text-muted); margin-bottom:var(--space-6); font-size:0.9rem;">Tell me about your project — schema challenges, team size, timeline. I'll respond within 24 hours with a plan.</p>
-              <a href="contact.html" class="btn btn--primary" style="width:100%; margin-bottom:var(--space-3);"><i class="fas fa-rocket"></i> Start a Project</a>
-              <a href="home2.html" class="btn btn--outline" style="width:100%;"><i class="fas fa-terminal"></i> Try Playground First</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    
   </main>
 
   <footer class="footer">

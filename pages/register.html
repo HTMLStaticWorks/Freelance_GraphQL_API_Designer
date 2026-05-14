@@ -3,25 +3,34 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register — GQLForge</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
   <link rel="stylesheet" href="../assets/css/rtl.css">
   <style>
     body { min-height:100vh; display:flex; flex-direction:column; }
-    .auth-page { flex:1; display:flex; align-items:center; justify-content:center; padding:var(--space-6); padding-top:calc(var(--header-h) + var(--space-6)); min-height:100vh; position:relative; }
+    .auth-page { flex:1; display:flex; align-items:center; justify-content:center; padding:var(--space-6); min-height:100vh; position:relative; }
     .auth-bg { position:absolute; inset:0; background:radial-gradient(ellipse at 70% 50%, rgba(0,102,255,0.08) 0%, transparent 60%); pointer-events:none; }
     .auth-card { background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-xl); padding:var(--space-10); width:100%; max-width:460px; backdrop-filter:blur(16px); box-shadow:var(--shadow-elevated); position:relative; z-index:1; }
     .auth-header { text-align:center; margin-bottom:var(--space-8); }
     .auth-divider { display:flex; align-items:center; gap:var(--space-4); margin:var(--space-6) 0; }
     .auth-divider::before, .auth-divider::after { content:''; flex:1; height:1px; background:var(--clr-border); }
     .auth-divider span { font-size:0.78rem; color:var(--clr-text-faint); }
-    .social-btn { display:flex; align-items:center; justify-content:center; gap:var(--space-3); width:100%; padding:10px; border:1px solid var(--clr-border); border-radius:var(--radius-md); background:var(--clr-glass); color:var(--clr-text); font-size:0.88rem; font-weight:500; cursor:pointer; transition:all var(--transition); margin-bottom:var(--space-3); font-family:var(--font-body); }
-    .social-btn:hover { border-color:var(--clr-primary); color:var(--clr-primary); transform:translateY(-1px); }
-    .auth-top-controls { position:fixed; top:calc((var(--header-h) - 38px)/2); right:var(--space-6); display:flex; gap:var(--space-3); z-index:1001; }
-    @media (max-width:480px) { .auth-card { padding:var(--space-6) var(--space-5); } .auth-top-controls { top:10px; } }
+    .auth-top-controls { position:absolute; top:20px; right:var(--space-6); display:flex; gap:var(--space-3); z-index:1001; }
+    .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-2); }
+    .social-btn { display:flex; align-items:center; justify-content:center; gap:var(--space-2); width:100%; height: 46px; padding:0 var(--space-3); border:1px solid var(--clr-border); border-radius:var(--radius-md); background:var(--clr-glass); color:var(--clr-text); font-size:0.82rem; font-weight:600; cursor:pointer; transition:all var(--transition); font-family:var(--font-body); white-space: nowrap; }
+    .social-btn:hover { border-color:var(--clr-primary); color:var(--clr-primary); transform:translateY(-1px); background: var(--clr-primary-dim); }
+    .social-btn i { font-size: 1.1rem; flex-shrink: 0; }
+    .social-btn .fa-google { color: #EA4335 !important; }
+    @media (max-width: 400px) { .social-btns { grid-template-columns: 1fr; } }
+    .auth-link { color: var(--clr-primary); font-size: 0.78rem; font-weight: 500; transition: all var(--transition); text-decoration: none; }
+    .auth-link:hover { color: var(--clr-text); text-decoration: underline; }
+    [data-theme="light"] .auth-link:hover { color: var(--clr-primary-dark); }
+    @media (max-width:480px) { 
+      .auth-card { padding:var(--space-8) var(--space-5); margin-top: 60px; } 
+      .auth-top-controls { top:15px; right:15px; position: absolute; } 
+      .auth-page { padding-top: 40px; align-items: flex-start; }
+    }
     .pw-field { position:relative; }
     .pw-field .form-input { padding-right:40px; }
     .pw-toggle { position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--clr-text-muted); cursor:pointer; font-size:0.9rem; transition:color var(--transition); }
@@ -36,78 +45,64 @@
 <body>
 
   <div class="auth-top-controls">
-    <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
+    <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
     <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
   </div>
-
-  <header class="header" style="background:transparent; border-bottom:none;">
-    <div class="header__inner">
-      <a href="../index.html" class="header__brand">
-        <div class="brand-logo">GQL</div>
-        <span class="brand-name">GQL<span>Forge</span></span>
-      </a>
-    </div>
-  </header>
 
   <main class="auth-page">
     <div class="auth-bg"></div>
     <div class="auth-card">
+      <!-- Centered Brand (Inside Card) -->
+      <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:var(--space-8);">
+        <a href="../index.html" class="header__brand" style="margin:0;">
+          <div class="brand-logo">GQL</div>
+          <span class="brand-name">GQL<span>Forge</span></span>
+        </a>
+      </div>
       <div class="auth-header">
         <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-primary); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:var(--space-3);">Get started free</div>
         <h1 style="font-size:1.6rem; margin-bottom:var(--space-2);">Create Your <span class="text-primary">Account</span></h1>
         <p style="font-size:0.88rem; color:var(--clr-text-muted);">Access the playground, download schemas, and collaborate on drafts.</p>
       </div>
 
-      <button class="social-btn"><i class="fab fa-github"></i> Sign up with GitHub</button>
-      <button class="social-btn"><i class="fab fa-google" style="color:#EA4335;"></i> Sign up with Google</button>
-
-      <div class="auth-divider"><span>or create with email</span></div>
+      
 
       <form data-validate-form>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4);">
           <div class="form-group">
             <label class="form-label" for="regFirst">First Name <span style="color:var(--clr-error)">*</span></label>
-            <input type="text" id="regFirst" class="form-input" placeholder="Arjun" data-validate="required" autocomplete="given-name">
+            <input type="text" id="regFirst" class="form-input" placeholder="" data-validate="required" autocomplete="given-name">
             <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
           </div>
           <div class="form-group">
             <label class="form-label" for="regLast">Last Name <span style="color:var(--clr-error)">*</span></label>
-            <input type="text" id="regLast" class="form-input" placeholder="Mehta" data-validate="required" autocomplete="family-name">
+            <input type="text" id="regLast" class="form-input" placeholder="" data-validate="required" autocomplete="family-name">
             <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
           </div>
-        </div>
 
         <div class="form-group">
           <label class="form-label" for="regEmail">Email Address <span style="color:var(--clr-error)">*</span></label>
-          <input type="email" id="regEmail" class="form-input" placeholder="you@company.com" data-validate="required,email" autocomplete="email">
+          <input type="email" id="regEmail" class="form-input" placeholder="" data-validate="required,email" autocomplete="email">
           <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
         </div>
 
         <div class="form-group">
           <label class="form-label" for="regPassword">Password <span style="color:var(--clr-error)">*</span></label>
           <div class="pw-field">
-            <input type="password" id="regPassword" class="form-input" placeholder="Min 8 characters" data-validate="required,minLength:8" autocomplete="new-password" oninput="updateStrength(this.value)">
+            <input type="password" id="regPassword" class="form-input" placeholder="" data-validate="required,minLength:8" autocomplete="new-password" oninput="updateStrength(this.value)">
             <button type="button" class="pw-toggle" onclick="togglePw('regPassword',this)" aria-label="Toggle password"><i class="fas fa-eye"></i></button>
           </div>
-          <div class="pw-strength" id="pwStrength">
-            <div class="pw-strength-bar" id="ps1"></div>
-            <div class="pw-strength-bar" id="ps2"></div>
-            <div class="pw-strength-bar" id="ps3"></div>
-            <div class="pw-strength-bar" id="ps4"></div>
-          </div>
+         
           <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
         </div>
 
         <div class="form-group">
-          <label class="form-label" for="regRole">I am a...</label>
-          <select id="regRole" class="form-select form-input">
-            <option>Backend Developer</option>
-            <option>Frontend Developer</option>
-            <option>Full Stack Developer</option>
-            <option>Engineering Manager</option>
-            <option>Product Manager</option>
-            <option>Other</option>
-          </select>
+          <label class="form-label" for="regPassword">Confirm Password <span style="color:var(--clr-error)">*</span></label>
+          <div class="pw-field">
+            <input type="password" id="regPassword" class="form-input" placeholder="" data-validate="required,minLength:8" autocomplete="new-password" oninput="updateStrength(this.value)">
+            <button type="button" class="pw-toggle" onclick="togglePw('regPassword',this)" aria-label="Toggle password"><i class="fas fa-eye"></i></button>
+          </div>
+         
+          <div class="form-error"><i class="fas fa-circle-exclamation"></i> <span></span></div>
         </div>
 
         <div style="display:flex; align-items:flex-start; gap:var(--space-3); margin-bottom:var(--space-6);">
@@ -118,6 +113,13 @@
         <button type="submit" class="btn btn--primary" style="width:100%;">
           <i class="fas fa-user-plus"></i> Create Account
         </button>
+
+              <div class="auth-divider"><span>or continue with</span></div>
+              <div class="social-btns">
+                <button type="button" class="social-btn"><i class="fab fa-apple"></i> Apple</button>
+                <button type="button" class="social-btn"><i class="fab fa-google"></i> Google</button>
+              </div>
+
       </form>
 
       <div style="text-align:center; margin-top:var(--space-6); font-size:0.88rem; color:var(--clr-text-muted);">

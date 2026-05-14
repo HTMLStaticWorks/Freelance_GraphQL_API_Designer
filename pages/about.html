@@ -1,35 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark" dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="About GQLForge - Freelance GraphQL API Designer. Learn about my story, expertise, and approach.">
+  <meta name="description"
+    content="About GQLForge - Freelance GraphQL API Designer. Learn about my story, expertise, and approach.">
   <title>About — GQLForge</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
   <link rel="stylesheet" href="../assets/css/rtl.css">
   <style>
-    .skill-bar-wrap { margin-bottom: var(--space-5); }
-    .skill-bar-label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px; }
-    .skill-bar-label span:first-child { color: var(--clr-text); font-weight: 500; }
-    .skill-bar-label span:last-child { font-family: var(--font-mono); color: var(--clr-primary); font-size: 0.8rem; }
-    .skill-bar-track { height: 6px; background: var(--clr-glass); border-radius: 100px; overflow: hidden; border: 1px solid var(--clr-border); }
-    .skill-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--clr-primary), #0066FF); transition: width 1.2s cubic-bezier(0.4,0,0.2,1); width: 0; }
-    .timeline { position: relative; padding-left: 32px; }
-    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--clr-primary), transparent); }
-    .timeline-item { position: relative; margin-bottom: var(--space-8); }
-    .timeline-item::before { content: ''; position: absolute; left: -28px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--clr-primary); border: 2px solid var(--clr-bg); box-shadow: 0 0 10px var(--clr-primary-glow); }
-    .timeline-year { font-family: var(--font-mono); font-size: 0.75rem; color: var(--clr-primary); margin-bottom: 4px; }
-    .timeline-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-    .timeline-co { font-size: 0.85rem; color: var(--clr-text-muted); margin-bottom: var(--space-3); }
-    .avatar-wrap { position: relative; width: 200px; height: 200px; margin: 0 auto; }
-    .avatar-img { width: 200px; height: 200px; border-radius: var(--radius-xl); background: linear-gradient(135deg, var(--clr-primary-dim), rgba(0,102,255,0.2)); border: 2px solid var(--clr-border); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
-    .avatar-badge { position: absolute; bottom: -10px; right: -10px; background: var(--clr-surface); border: 1px solid var(--clr-border); border-radius: var(--radius-md); padding: 8px 14px; font-family: var(--font-mono); font-size: 0.72rem; color: var(--clr-primary); white-space: nowrap; }
+    .skill-bar-wrap {
+      margin-bottom: var(--space-5);
+    }
+
+    .skill-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+
+    .skill-bar-label span:first-child {
+      color: var(--clr-text);
+      font-weight: 500;
+    }
+
+    .skill-bar-label span:last-child {
+      font-family: var(--font-mono);
+      color: var(--clr-primary);
+      font-size: 0.8rem;
+    }
+
+    .skill-bar-track {
+      height: 6px;
+      background: var(--clr-glass);
+      border-radius: 100px;
+      overflow: hidden;
+      border: 1px solid var(--clr-border);
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: linear-gradient(90deg, var(--clr-primary), #0066FF);
+      transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 0;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--clr-primary), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: var(--space-8);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--clr-primary);
+      border: 2px solid var(--clr-bg);
+      box-shadow: 0 0 10px var(--clr-primary-glow);
+    }
+
+    .timeline-year {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--clr-primary);
+      margin-bottom: 4px;
+    }
+
+    .timeline-title {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .timeline-co {
+      font-size: 0.85rem;
+      color: var(--clr-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .avatar-wrap {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+
+    .avatar-img {
+      width: 200px;
+      height: 200px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--clr-primary-dim), rgba(0, 102, 255, 0.2));
+      border: 2px solid var(--clr-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+    }
+
+    .avatar-badge {
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      background: var(--clr-surface);
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--clr-primary);
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    @media (max-width: 991px) {
+      .story-grid { grid-template-columns: 1fr !important; gap: var(--space-10) !important; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr !important; }
+    }
   </style>
 </head>
+
 <body>
   <header class="header">
     <div class="header__inner">
@@ -44,13 +160,15 @@
         <a href="services.html" class="nav__link">Services</a>
         <a href="blog.html" class="nav__link">Blog</a>
         <a href="contact.html" class="nav__link">Contact</a>
-        <a href="dashboard.html" class="nav__link nav__dashboard"><i class="fas fa-gauge-high" style="font-size:0.8rem;"></i> Dashboard</a>
+        <a href="dashboard.html" class="nav__link nav__dashboard">Dashboard</a>
       </nav>
       <div class="header__actions">
-        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL"><i class="fas fa-language"></i></button>
-        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i class="fas fa-sun"></i></button>
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i
+            class="fas fa-sun"></i></button>
         <a href="login.html" class="btn btn--outline btn--sm">Login</a>
-        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+        <button class="hamburger" aria-label="Toggle menu"
+          aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
   </header>
@@ -62,11 +180,15 @@
       <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
       <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
       <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="dashboard.html" class="mobile-menu__link" style="color:var(--clr-primary)"><i class="fas fa-gauge-high"></i> Dashboard</a>
+      <a href="dashboard.html" class="mobile-menu__link"><i class="fas fa-gauge-high"></i> Dashboard</a>
     </nav>
     <div class="mobile-menu__actions">
+      <div class="mobile-menu__utils">
+        <button class="header__action-btn" data-rtl-toggle aria-label="Toggle RTL">RTL</button>
+        <button class="header__action-btn" data-theme-toggle aria-label="Toggle theme"><i
+            class="fas fa-sun"></i></button>
+      </div>
       <a href="login.html" class="btn btn--outline">Login</a>
-      <a href="register.html" class="btn btn--primary">Get Started</a>
     </div>
   </div>
 
@@ -75,77 +197,114 @@
     <section class="page-hero">
       <div class="page-hero__bg"></div>
       <div class="container">
-        <div class="breadcrumb"><a href="../index.html">Home</a><span class="breadcrumb__sep">/</span><span class="breadcrumb__current">About</span></div>
         <div class="section__tag" style="display:inline-flex;"><i class="fas fa-user"></i> About Me</div>
-        <h1 style="margin: var(--space-4) 0; font-size: clamp(2rem,5vw,3.5rem);">The GraphQL <span class="text-primary">Craftsman</span></h1>
-        <p style="max-width:560px; margin:0 auto; color:var(--clr-text-muted);">6+ years designing APIs that teams love to work with. I obsess over schema clarity, resolver performance, and developer experience.</p>
+        <h1 style="margin: var(--space-4) 0; font-size: clamp(2rem,5vw,3.5rem);">The GraphQL <span
+            class="text-primary">Craftsman</span></h1>
+        <p style="max-width:560px; margin:0 auto; color:var(--clr-text-muted);">6+ years designing APIs that teams love
+          to work with. I obsess over schema clarity, resolver performance, and developer experience.</p>
       </div>
     </section>
 
     <!-- SECTION 1: STORY & SKILLS -->
     <section class="section">
       <div class="container">
-        <div style="display:grid; grid-template-columns:1fr 1.4fr; gap:var(--space-16); align-items:start;">
-          <div class="reveal" style="text-align:center;">
+        <div class="story-grid" style="display:grid; grid-template-columns:1fr 1.4fr; gap:var(--space-16); align-items:stretch;">
+          <div class="reveal" style="text-align:center; display: flex; flex-direction: column;">
             <div class="avatar-wrap">
-              <div class="avatar-img">🧑💻</div>
-              <div class="avatar-badge"><i class="fas fa-circle" style="color:var(--clr-success);font-size:7px;"></i> Available for hire</div>
+              <div class="avatar-img" style="background: var(--clr-surface2); overflow: hidden;">
+                <img src="https://media.istockphoto.com/id/2099403180/photo/laughing-yougn-businesswoman-standing-with-her-arms-crossed-against-an-office-wall.jpg?s=612x612&w=0&k=20&c=kn6TM5y-26ohkuoAU9FiWn4pYoyVPS7xfWLVyBGj_TA=" alt="Kiran Selvaraj" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="avatar-badge"><i class="fas fa-circle" style="color:var(--clr-success);font-size:7px;"></i>
+                Available for hire</div>
             </div>
             <h2 style="margin: var(--space-6) 0 var(--space-2);">Kiran Selvaraj</h2>
-            <p style="color:var(--clr-primary); font-family:var(--font-mono); font-size:0.85rem;">Freelance GraphQL Architect</p>
-            <p style="color:var(--clr-text-muted); font-size:0.88rem; margin-top:var(--space-3);">Chennai, India · Remote Worldwide</p>
+            <p style="color:var(--clr-primary); font-family:var(--font-mono); font-size:0.85rem;">Freelance GraphQL
+              Architect</p>
+            <p style="color:var(--clr-text-muted); font-size:0.88rem; margin-top:var(--space-3);">Chennai, India ·
+              Remote Worldwide</p>
             <div style="display:flex; gap:var(--space-3); justify-content:center; margin-top:var(--space-6);">
               <a href="#" class="btn btn--outline btn--sm"><i class="fab fa-github"></i> GitHub</a>
               <a href="#" class="btn btn--outline btn--sm"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
             </div>
-            <div style="margin-top:var(--space-8); display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4);">
-              <div style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
-                <div style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)" data-counter data-target="80" data-suffix="+">0+</div>
+            <div class="stats-grid" style="margin-top:auto; padding-top: var(--space-8); display:grid; grid-template-columns:1fr 1fr; gap:var(--space-4);">
+              <div
+                style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
+                <div
+                  style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)"
+                  data-counter data-target="80" data-suffix="+">0+</div>
                 <div style="font-size:0.75rem; color:var(--clr-text-muted);">APIs Shipped</div>
               </div>
-              <div style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
-                <div style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)" data-counter data-target="6" data-suffix="+">0+</div>
+              <div
+                style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
+                <div
+                  style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)"
+                  data-counter data-target="6" data-suffix="+">0+</div>
                 <div style="font-size:0.75rem; color:var(--clr-text-muted);">Years Exp</div>
               </div>
-              <div style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
-                <div style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)" data-counter data-target="35" data-suffix="+">0+</div>
+              <div
+                style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
+                <div
+                  style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-primary)"
+                  data-counter data-target="35" data-suffix="+">0+</div>
                 <div style="font-size:0.75rem; color:var(--clr-text-muted);">Clients</div>
               </div>
-              <div style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
-                <div style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-success)">97%</div>
+              <div
+                style="background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md); padding:var(--space-5); text-align:center;">
+                <div
+                  style="font-family:var(--font-display); font-size:1.8rem; font-weight:800; color:var(--clr-success)">
+                  97%</div>
                 <div style="font-size:0.75rem; color:var(--clr-text-muted);">Satisfaction</div>
               </div>
             </div>
           </div>
 
           <div class="reveal">
-            <div class="section__tag" style="display:inline-flex; margin-bottom:var(--space-5);"><i class="fas fa-book-open"></i> My Story</div>
-            <h2 style="margin-bottom:var(--space-5);">From REST to <span class="text-primary">GraphQL</span> Obsession</h2>
-            <p style="margin-bottom:var(--space-4);">I started building APIs in 2018 with REST, hitting walls of over-fetching, versioning nightmares, and client-specific endpoints. When I discovered GraphQL, the elegance was immediate — but so were the traps.</p>
-            <p style="margin-bottom:var(--space-4);">After spending two years fixing N+1 problems, schema anti-patterns, and resolver bottlenecks for teams that had adopted GraphQL without guardrails, I realized there was a clear gap: most teams needed someone who understood both the philosophy and the performance engineering.</p>
-            <p style="margin-bottom:var(--space-8);">GQLForge is that bridge. I help teams design schemas they're proud of, resolve performance issues they've been fighting for months, and build the federation architecture that lets them scale independently.</p>
+            <div class="section__tag" style="display:inline-flex; margin-bottom:var(--space-5);"><i
+                class="fas fa-book-open"></i> My Story</div>
+            <h2 style="margin-bottom:var(--space-5);">From REST to <span class="text-primary">GraphQL</span> Obsession
+            </h2>
+            <p style="margin-bottom:var(--space-4);">I started building APIs in 2018 with REST, hitting walls of
+              over-fetching, versioning nightmares, and client-specific endpoints. When I discovered GraphQL, the
+              elegance was immediate — but so were the traps.</p>
+            <p style="margin-bottom:var(--space-4);">After spending two years fixing N+1 problems, schema anti-patterns,
+              and resolver bottlenecks for teams that had adopted GraphQL without guardrails, I realized there was a
+              clear gap: most teams needed someone who understood both the philosophy and the performance engineering.
+            </p>
+            <p style="margin-bottom:var(--space-8);">GQLForge is that bridge. I help teams design schemas they're proud
+              of, resolve performance issues they've been fighting for months, and build the federation architecture
+              that lets them scale independently.</p>
 
             <h3 style="margin-bottom:var(--space-6);">Technical Skills</h3>
             <div id="skillBars">
               <div class="skill-bar-wrap">
                 <div class="skill-bar-label"><span>GraphQL Schema Design</span><span>98%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="98"></div></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="98"></div>
+                </div>
               </div>
               <div class="skill-bar-wrap">
                 <div class="skill-bar-label"><span>Apollo Federation</span><span>95%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="95"></div>
+                </div>
               </div>
               <div class="skill-bar-wrap">
                 <div class="skill-bar-label"><span>DataLoader & N+1 Solutions</span><span>99%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="99"></div></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="99"></div>
+                </div>
               </div>
               <div class="skill-bar-wrap">
                 <div class="skill-bar-label"><span>Node.js / TypeScript</span><span>90%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="90"></div>
+                </div>
               </div>
               <div class="skill-bar-wrap">
                 <div class="skill-bar-label"><span>PostgreSQL / Redis</span><span>87%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="87"></div></div>
+                <div class="skill-bar-track">
+                  <div class="skill-bar-fill" data-width="87"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -159,7 +318,8 @@
         <div class="section__header">
           <div class="section__tag"><i class="fas fa-timeline"></i> Experience</div>
           <h2 class="section__title">Career Timeline</h2>
-          <p class="section__subtitle">From junior backend developer to specialized GraphQL architect — a journey through APIs, schemas, and performance problems.</p>
+          <p class="section__subtitle">From junior backend developer to specialized GraphQL architect — a journey
+            through APIs, schemas, and performance problems.</p>
         </div>
         <div style="max-width:700px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:var(--space-8);">
           <div class="timeline reveal">
@@ -167,19 +327,22 @@
               <div class="timeline-year">2024–Present</div>
               <div class="timeline-title">Freelance GraphQL Architect</div>
               <div class="timeline-co">GQLForge · Self-employed</div>
-              <p style="font-size:0.85rem;">Full-service GraphQL consultancy: schema design, N+1 audits, federation architecture, and team training.</p>
+              <p style="font-size:0.85rem;">Full-service GraphQL consultancy: schema design, N+1 audits, federation
+                architecture, and team training.</p>
             </div>
             <div class="timeline-item">
               <div class="timeline-year">2021–2024</div>
               <div class="timeline-title">Senior API Engineer</div>
               <div class="timeline-co">Stacklane Technologies</div>
-              <p style="font-size:0.85rem;">Led migration of REST platform to federated GraphQL supergraph serving 2M+ requests/day.</p>
+              <p style="font-size:0.85rem;">Led migration of REST platform to federated GraphQL supergraph serving 2M+
+                requests/day.</p>
             </div>
             <div class="timeline-item">
               <div class="timeline-year">2019–2021</div>
               <div class="timeline-title">Backend Developer</div>
               <div class="timeline-co">Nexora Labs</div>
-              <p style="font-size:0.85rem;">Built GraphQL APIs for SaaS products. First deep dive into schema stitching and resolver optimization.</p>
+              <p style="font-size:0.85rem;">Built GraphQL APIs for SaaS products. First deep dive into schema stitching
+                and resolver optimization.</p>
             </div>
           </div>
           <div class="reveal animate-delay-1">
@@ -201,14 +364,16 @@
 
             <h3 style="margin: var(--space-8) 0 var(--space-5);">Certifications</h3>
             <div style="display:flex; flex-direction:column; gap:var(--space-3);">
-              <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md);">
+              <div
+                style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md);">
                 <i class="fas fa-certificate" style="color:var(--clr-primary); font-size:1.2rem;"></i>
                 <div>
                   <div style="font-size:0.88rem; font-weight:600;">Apollo Graph Developer</div>
                   <div style="font-size:0.75rem; color:var(--clr-text-muted);">Apollo GraphQL · 2023</div>
                 </div>
               </div>
-              <div style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md);">
+              <div
+                style="display:flex; align-items:center; gap:var(--space-3); padding:var(--space-4); background:var(--clr-card); border:1px solid var(--clr-border); border-radius:var(--radius-md);">
                 <i class="fas fa-certificate" style="color:var(--clr-primary); font-size:1.2rem;"></i>
                 <div>
                   <div style="font-size:0.88rem; font-weight:600;">AWS Solutions Architect</div>
@@ -226,10 +391,13 @@
       <div class="container">
         <div class="cta-section reveal">
           <div class="section__tag" style="display:inline-flex;"><i class="fas fa-handshake"></i> Work Together</div>
-          <h2 class="section__title" style="margin-top:var(--space-4);">Let's Build Something<br><span class="text-primary">Extraordinary</span></h2>
-          <p style="max-width:480px; margin:var(--space-4) auto var(--space-8); color:var(--clr-text-muted);">Whether you need a schema from scratch, a performance rescue, or a team training session — I'm ready to help.</p>
+          <h2 class="section__title" style="margin-top:var(--space-4);">Let's Build Something<br><span
+              class="text-primary">Extraordinary</span></h2>
+          <p style="max-width:480px; margin:var(--space-4) auto var(--space-8); color:var(--clr-text-muted);">Whether
+            you need a schema from scratch, a performance rescue, or a team training session — I'm ready to help.</p>
           <div style="display:flex; flex-wrap:wrap; gap:var(--space-4); justify-content:center;">
-            <a href="contact.html" class="btn btn--primary btn--lg"><i class="fas fa-calendar-check"></i> Book a Call</a>
+            <a href="contact.html" class="btn btn--primary btn--lg"><i class="fas fa-calendar-check"></i> Book a
+              Call</a>
             <a href="services.html" class="btn btn--outline btn--lg"><i class="fas fa-briefcase"></i> View Services</a>
           </div>
         </div>
@@ -245,7 +413,8 @@
             <div class="brand-logo">GQL</div>
             <span class="brand-name">GQL<span>Forge</span></span>
           </a>
-          <p class="footer__brand-desc">Freelance GraphQL API designer. Schema stitching, N+1 solutions, federation architecture.</p>
+          <p class="footer__brand-desc">Freelance GraphQL API designer. Schema stitching, N+1 solutions, federation
+            architecture.</p>
           <div class="footer__social">
             <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
             <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -256,9 +425,12 @@
         <div>
           <h3 class="footer__col-title">Services</h3>
           <ul class="footer__links">
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a></li>
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a>
+            </li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Stitching</a>
+            </li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a>
+            </li>
             <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team Training</a></li>
           </ul>
         </div>
@@ -276,7 +448,9 @@
           <div class="footer__contact-item"><i class="fas fa-envelope"></i><span>hello@gqlforge.dev</span></div>
           <div class="footer__contact-item"><i class="fas fa-location-dot"></i><span>Remote Worldwide</span></div>
           <div class="footer__contact-item"><i class="fas fa-clock"></i><span>Mon–Fri, 9am–6pm IST</span></div>
-          <div class="footer__contact-item"><i class="fas fa-circle" style="color:var(--clr-success);font-size:0.6rem;margin-top:6px;"></i><span style="color:var(--clr-success);font-size:0.85rem;">Open to projects</span></div>
+          <div class="footer__contact-item"><i class="fas fa-circle"
+              style="color:var(--clr-success);font-size:0.6rem;margin-top:6px;"></i><span
+              style="color:var(--clr-success);font-size:0.85rem;">Open to projects</span></div>
         </div>
       </div>
       <div class="footer__bottom">
@@ -306,4 +480,5 @@
     if (skillSection) observer.observe(skillSection);
   </script>
 </body>
+
 </html>
