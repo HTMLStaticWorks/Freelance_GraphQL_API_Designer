@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register — GQLForge</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
@@ -23,8 +24,12 @@
     .social-btn i { font-size: 1.1rem; flex-shrink: 0; }
     .social-btn .fa-google { color: #EA4335 !important; }
     @media (max-width: 400px) { .social-btns { grid-template-columns: 1fr; } }
-    .auth-link { color: var(--clr-primary); font-size: 0.78rem; font-weight: 500; transition: all var(--transition); text-decoration: none; }
-    .auth-link:hover { color: var(--clr-text); text-decoration: underline; }
+    .auth-link { color: var(--clr-primary); font-size: 0.78rem; font-weight: 500; transition: all var(--transition); text-decoration: none; position: relative; }
+    .auth-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px; background: var(--clr-primary); transition: width var(--transition); }
+    .auth-link:hover { color: var(--clr-primary); opacity: 0.9; }
+    .auth-link:hover::after { width: 100%; }
+    .auth-card a:not(.btn):not(.header__brand) { transition: all var(--transition); }
+    .auth-card a:not(.btn):not(.header__brand):hover { color: var(--clr-primary); filter: brightness(1.2); text-decoration: none; }
     [data-theme="light"] .auth-link:hover { color: var(--clr-primary-dark); }
     @media (max-width:480px) { 
       .auth-card { padding:var(--space-8) var(--space-5); margin-top: 60px; } 

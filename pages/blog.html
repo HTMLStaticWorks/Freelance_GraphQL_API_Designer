@@ -4,6 +4,7 @@
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="GQLForge Blog - GraphQL articles, N+1 solutions, schema design tips">
   <title>Blog — GQLForge</title>
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/dark-mode.css">
@@ -60,13 +61,13 @@
   </header>
   <div class="mobile-menu">
     <nav class="mobile-menu__nav">
-      <a href="../index.html" class="mobile-menu__link"><i class="fas fa-house"></i> Home</a>
-      <a href="home2.html" class="mobile-menu__link"><i class="fas fa-layer-group"></i> Home 2</a>
-      <a href="about.html" class="mobile-menu__link"><i class="fas fa-user"></i> About</a>
-      <a href="services.html" class="mobile-menu__link"><i class="fas fa-code"></i> Services</a>
-      <a href="blog.html" class="mobile-menu__link"><i class="fas fa-blog"></i> Blog</a>
-      <a href="contact.html" class="mobile-menu__link"><i class="fas fa-envelope"></i> Contact</a>
-      <a href="dashboard.html" class="mobile-menu__link"><i class="fas fa-gauge-high"></i> Dashboard</a>
+      <a href="../index.html" class="mobile-menu__link">Home</a>
+      <a href="home2.html" class="mobile-menu__link">Home 2</a>
+      <a href="about.html" class="mobile-menu__link">About</a>
+      <a href="services.html" class="mobile-menu__link">Services</a>
+      <a href="blog.html" class="mobile-menu__link">Blog</a>
+      <a href="contact.html" class="mobile-menu__link">Contact</a>
+      <a href="dashboard.html" class="mobile-menu__link">Dashboard</a>
     </nav>
     <div class="mobile-menu__actions">
       <div class="mobile-menu__utils">
@@ -106,7 +107,7 @@
           </div>
           <div style="padding:var(--space-10);">
             <span class="badge badge--primary" style="margin-bottom:var(--space-4);">Featured</span>
-            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); margin-bottom:var(--space-3);">Jan 15, 2025 · 12 min read</div>
+            <div style="font-family:var(--font-mono); font-size:0.72rem; color:var(--clr-text-faint); margin-bottom:var(--space-3);">Jan 15, 2026 · 12 min read</div>
             <h2 style="margin-bottom:var(--space-4); font-size:1.5rem; line-height:1.3;">The Definitive Guide to Eliminating N+1 in GraphQL with DataLoader</h2>
             <p style="color:var(--clr-text-muted); margin-bottom:var(--space-6); font-size:0.92rem;">How I reduced 51 database calls to 1 for a product catalog serving 500+ queries/sec — with code examples, benchmarks, and the exact DataLoader pattern I use in production.</p>
             <div style="display:flex; align-items:center; gap:var(--space-5);">
@@ -123,9 +124,9 @@
               <img src="https://s3.eu-west-1.amazonaws.com/hodovi.cc/media/images/main.width-2000.jpg" alt="Apollo Federation" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             <div class="blog-card__body">
-              <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 8 min</span><span>Jan 8, 2025</span><span class="badge badge--primary">Federation</span></div>
-              <h3 class="blog-card__title"><a href="#">Apollo Federation v2: What Changed and Why It Matters for Your Supergraph</a></h3>
-              <p style="font-size:0.85rem;">Breaking down the key differences in Federation v2 — shareable types, override directive, and the new composition model.</p>
+              <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 8 min</span><span>Jan 8, 2026</span><span class="badge badge--primary">Federation</span></div>
+              <h3 class="blog-card__title"><a href="#">Apollo Federation v2: What Changed and Why It Supergraph</a></h3>
+              <p style="font-size:0.85rem;">Breaking down the key differences in Federation v2 — shareable types, override directive, and the new composition.</p>
             </div>
             <div class="blog-card__footer"><div class="author-mini"><div class="author-mini-avatar">KS</div><span>Kiran Selvaraj</span></div><a href="#" class="btn btn--ghost btn--sm">Read <i class="fas fa-arrow-right"></i></a></div>
           </div>
@@ -136,7 +137,7 @@
             </div>
             <div class="blog-card__body">
               <div class="blog-card__meta"><span><i class="fas fa-clock"></i> 6 min</span><span>Dec 28, 2024</span><span class="badge badge--warning">Security</span></div>
-              <h3 class="blog-card__title"><a href="#">Query Depth Limiting in GraphQL: Why You Need It and How to Implement It</a></h3>
+              <h3 class="blog-card__title"><a href="#">Query Depth Limiting in GraphQL: Why You Implement</a></h3>
               <p style="font-size:0.85rem;">Without depth limits, a single malicious query can bring down your API. Here's the middleware I use to prevent it.</p>
             </div>
             <div class="blog-card__footer"><div class="author-mini"><div class="author-mini-avatar">KS</div><span>Kiran Selvaraj</span></div><a href="#" class="btn btn--ghost btn--sm">Read <i class="fas fa-arrow-right"></i></a></div>
@@ -192,48 +193,91 @@
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer__grid">
+        <!-- Brand Col -->
         <div>
-          <a href="../index.html" class="header__brand" style="margin-bottom:var(--space-4);display:inline-flex;"><div class="brand-logo">GQL</div><span class="brand-name">GQL<span>Forge</span></span></a>
-          <p class="footer__brand-desc">Freelance GraphQL API designer. Schema stitching, N+1 solutions, federation architecture.</p>
+          <a href="../index.html" class="header__brand" style="margin-bottom: var(--space-4); display: inline-flex;">
+            <div class="brand-logo">GQL</div>
+            <span class="brand-name">GQL<span>Forge</span></span>
+          </a>
+          <p class="footer__brand-desc">
+            Freelance GraphQL API designer crafting schemas that scale. Schema stitching, N+1 solutions, and federation
+            architecture.
+          </p>
           <div class="footer__social">
-            <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" class="footer__social-link" aria-label="GitHub"><i class="fab fa-facebook"></i></a>
             <a href="#" class="footer__social-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" class="footer__social-link" aria-label="Dev.to"><i class="fab fa-dev"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Twitter"><i class="fab fa-x"></i></a>
+            <a href="#" class="footer__social-link" aria-label="Dev.to"><i class="fab fa-apple"></i></a>
           </div>
         </div>
+
+        <!-- Services Col -->
         <div>
           <h3 class="footer__col-title">Services</h3>
           <ul class="footer__links">
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API Architecture</a></li>
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance Audit</a></li>
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1 Solutions</a></li>
-            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team Training</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> API
+                Architecture</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Schema
+                Stitching</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Performance
+                Audit</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> N+1
+                Solutions</a></li>
+            <li><a href="services.html" class="footer__link"><i class="fas fa-chevron-right"></i> Team
+                Training</a></li>
           </ul>
         </div>
+
+        <!-- Resources Col -->
         <div>
-          <h3 class="footer__col-title">Blog Topics</h3>
+          <h3 class="footer__col-title">Resources</h3>
           <ul class="footer__links">
-            <li><a href="#" class="footer__link"><i class="fas fa-chevron-right"></i> Schema Design</a></li>
-            <li><a href="#" class="footer__link"><i class="fas fa-chevron-right"></i> N+1 Solutions</a></li>
-            <li><a href="#" class="footer__link"><i class="fas fa-chevron-right"></i> Federation</a></li>
-            <li><a href="#" class="footer__link"><i class="fas fa-chevron-right"></i> Security</a></li>
+            <li><a href="home2.html" class="footer__link"><i class="fas fa-chevron-right"></i> GraphQL
+                Playground</a></li>
+            <li><a href="blog.html" class="footer__link"><i class="fas fa-chevron-right"></i> Blog & Articles</a>
+            </li>
+            <li><a href="about.html" class="footer__link"><i class="fas fa-chevron-right"></i> Case Studies</a>
+            </li>
+            <li><a href="dashboard.html" class="footer__link"><i class="fas fa-chevron-right"></i> Dashboard</a>
+            </li>
+            <li><a href="../documentation/README.html" class="footer__link"><i class="fas fa-chevron-right"></i>
+                Documentation</a></li>
           </ul>
         </div>
+
+        <!-- Contact Col -->
         <div>
           <h3 class="footer__col-title">Contact</h3>
-          <div class="footer__contact-item"><i class="fas fa-envelope"></i><span>hello@gqlforge.dev</span></div>
-          <div class="footer__contact-item"><i class="fas fa-location-dot"></i><span>Remote Worldwide</span></div>
-          <div class="footer__contact-item"><i class="fas fa-clock"></i><span>Mon–Fri, 9am–6pm IST</span></div>
-          <div class="footer__contact-item"><i class="fas fa-circle" style="color:var(--clr-success);font-size:0.6rem;margin-top:6px;"></i><span style="color:var(--clr-success);font-size:0.85rem;">Open to projects</span></div>
+          <div class="footer__contact-item">
+            <i class="fas fa-envelope"></i>
+            <span>hello@gqlforge.dev</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-location-dot"></i>
+            <span>Available Worldwide (Remote)</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-clock"></i>
+            <span>Mon–Fri, 9am–6pm IST</span>
+          </div>
+          <div class="footer__contact-item">
+            <i class="fas fa-circle" style="color: var(--clr-success); font-size: 0.6rem; margin-top: 6px;"></i>
+            <span style="color: var(--clr-success); font-size: 0.85rem;">Open to new projects</span>
+          </div>
         </div>
       </div>
+
       <div class="footer__bottom">
-        <p class="footer__copy">© 2025 <span>GQLForge</span>. All rights reserved.</p>
-        <div class="footer__bottom-links"><a href="#" class="footer__bottom-link">Privacy</a><a href="#" class="footer__bottom-link">Terms</a></div>
+        <p class="footer__copy">© 2026 <span>GQLForge</span>. Crafted with <i class="fas fa-heart"
+            style="color: var(--clr-error);"></i> and GraphQL.</p>
+        <div class="footer__bottom-links">
+          <a href="#" class="footer__bottom-link">Privacy Policy</a>
+          <a href="#" class="footer__bottom-link">Terms of Service</a>
+          <a href="#" class="footer__bottom-link">Sitemap</a>
+        </div>
       </div>
     </div>
   </footer>

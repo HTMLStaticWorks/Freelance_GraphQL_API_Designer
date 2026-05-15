@@ -180,6 +180,12 @@
   transition: transform var(--transition);
   display: flex;
   flex-direction: column;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.dash-sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar__brand {
@@ -849,5 +855,30 @@
 @media (max-width: 380px) {
   .stat-cards {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Glass Button Utility */
+.btn--glass {
+  background: var(--clr-glass);
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-muted);
+  transition: all var(--transition);
+}
+
+.btn--glass:hover {
+  background: var(--clr-primary-dim);
+  border-color: var(--clr-primary);
+  color: var(--clr-primary);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .btn--glass {
+  color: var(--clr-primary);
+}
+
+@media (min-width: 1440px) {
+  .dash-sidebar {
+    overflow-y: hidden;
   }
 }
